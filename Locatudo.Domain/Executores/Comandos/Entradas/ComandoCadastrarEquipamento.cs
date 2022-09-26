@@ -1,10 +1,10 @@
 ﻿using Flunt.Notifications;
 using Locatudo.Domain.Executores.Comandos.Contratos;
-using Locatudo.Shared.Executores.Comandos.Entradas;
+using Locatudo.Shared.Handlers.Commands.Input;
 
 namespace Locatudo.Domain.Executores.Comandos.Entradas
 {
-    public class ComandoCadastrarEquipamento : Notifiable<Notification>, IComandoExecutor
+    public class ComandoCadastrarEquipamento : Notifiable<Notification>, IHandlerCommand
     {
         public string Nome { get; set; }
 
@@ -17,7 +17,7 @@ namespace Locatudo.Domain.Executores.Comandos.Entradas
             Nome = nome;
         }
 
-        public bool Validar()
+        public bool Validate()
         {
             AddNotifications(new ContratoComandoCadastrarEquipamento(this));
 

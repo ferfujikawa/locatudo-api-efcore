@@ -1,8 +1,8 @@
-﻿namespace Locatudo.Shared.Entidades
+﻿namespace Locatudo.Shared.Entities
 {
-    public abstract class EntidadeBase
+    public abstract class BaseEntity
     {
-        protected EntidadeBase()
+        protected BaseEntity()
         {
             Id = Guid.NewGuid();
         }

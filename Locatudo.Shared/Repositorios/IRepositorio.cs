@@ -1,8 +1,8 @@
-﻿using Locatudo.Shared.Entidades;
+﻿using Locatudo.Shared.Entities;
 
 namespace Locatudo.Shared.Repositorios
 {
-    public interface IRepositorio<T> where T : EntidadeBase
+    public interface IRepositorio<T> where T : BaseEntity
     {
         void Criar(T entidade);
         IEnumerable<T> Listar();

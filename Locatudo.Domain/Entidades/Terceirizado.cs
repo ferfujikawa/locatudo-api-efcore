@@ -1,14 +1,14 @@
-﻿using Locatudo.Shared.ObjetosDeValor;
+﻿using Locatudo.Shared.ValueObjects;
 
 namespace Locatudo.Domain.Entidades
 {
     public class Terceirizado : Usuario
     {
-        public Terceirizado(NomePessoaFisica nome, Email email, NomePessoaJuridica empresa) : base(nome, email)
+        public Terceirizado(PersonName nome, Email email, EnterpriseName empresa) : base(nome, email)
         {
             Empresa = empresa;
         }
 
-        public NomePessoaJuridica Empresa { get; private set; }
+        public EnterpriseName Empresa { get; private set; }
     }
 }

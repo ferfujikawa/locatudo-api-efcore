@@ -1,8 +1,8 @@
-﻿using Locatudo.Shared.Executores.Comandos.Saidas;
+﻿using Locatudo.Shared.Handlers.Commands.Output;
 
 namespace Locatudo.Domain.Executores.Comandos.Saidas
 {
-    public class DadoRespostaComandoCancelarLocacao : IDadoRespostaComandoExecutor
+    public class DadoRespostaComandoCancelarLocacao : IHandlerCommandData
     {
         public Guid IdLocacao { get; set; }
         public string Situacao { get; set; }

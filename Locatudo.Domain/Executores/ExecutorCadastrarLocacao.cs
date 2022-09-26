@@ -1,14 +1,15 @@
 ﻿using Locatudo.Shared.ObjetosDeValor;
 using Locatudo.Domain.Entidades;
-using Locatudo.Shared.Executores;
 using Locatudo.Shared.Executores.Comandos.Saidas;
 using Locatudo.Domain.Executores.Comandos.Entradas;
 using Locatudo.Domain.Repositorios;
 using Locatudo.Domain.Executores.Comandos.Saidas;
+using Locatudo.Shared.Handlers;
+using Locatudo.Shared.Handlers.Commands.Output;
 
 namespace Locatudo.Domain.Executores
 {
-    public class ExecutorCadastrarLocacao : IExecutor<ComandoCadastrarLocacao, DadoRespostaComandoCadastrarLocacao>
+    public class ExecutorCadastrarLocacao : IHandler<ComandoCadastrarLocacao, DadoRespostaComandoCadastrarLocacao>
     {
         private readonly IRepositorioEquipamento _repositorioEquipamento;
         private readonly IRepositorioUsuario _repositorioUsuario;
@@ -24,27 +25,27 @@ namespace Locatudo.Domain.Executores
             _repositorioLocacao = repositorioLocacao;
         }
 
-        public IRespostaComandoExecutor<DadoRespostaComandoCadastrarLocacao> Executar(ComandoCadastrarLocacao comando)
+        public IHandlerCommandResponse<DadoRespostaComandoCadastrarLocacao> Handle(ComandoCadastrarLocacao comando)
         {
-            if (!comando.Validar())
-                return new RespostaGenericaComandoExecutor<DadoRespostaComandoCadastrarLocacao>(false, null, comando.Notifications);
+            if (!comando.Validate())
+                return new GenericHandlerCommandResponse<DadoRespostaComandoCadastrarLocacao>(false, null, comando.Notifications);
 
             var equipamento = _repositorioEquipamento.ObterPorId(comando.IdEquipamento);
-            var horarioLocacao = new HorarioLocacao(comando.Inicio);
+            var horarioLocacao = new RentalTime(comando.Inicio);
             if (equipamento == null)
-                return new RespostaGenericaComandoExecutor<DadoRespostaComandoCadastrarLocacao>(false, null, "IdEquipamento", "Equipamento não encontrado");
+                return new GenericHandlerCommandResponse<DadoRespostaComandoCadastrarLocacao>(false, null, "IdEquipamento", "Equipamento não encontrado");
 
             var locatario = _repositorioUsuario.ObterPorId(comando.IdLocatario);
             if (locatario == null)
-                return new RespostaGenericaComandoExecutor<DadoRespostaComandoCadastrarLocacao>(false, null, "IdLocatario", "Usuário não encontrado");
+                return new GenericHandlerCommandResponse<DadoRespostaComandoCadastrarLocacao>(false, null, "IdLocatario", "Usuário não encontrado");
 
             if (!_repositorioLocacao.VerificarDisponibilidade(comando.IdEquipamento, horarioLocacao))
-                return new RespostaGenericaComandoExecutor<DadoRespostaComandoCadastrarLocacao>(false, null, "Inicio", "Horário de locação indisponível");
+                return new GenericHandlerCommandResponse<DadoRespostaComandoCadastrarLocacao>(false, null, "Start", "Horário de locação indisponível");
 
             var locacao = new Locacao(equipamento, locatario, horarioLocacao);
             _repositorioLocacao.Criar(locacao);
 
-            return new RespostaGenericaComandoExecutor<DadoRespostaComandoCadastrarLocacao>(
+            return new GenericHandlerCommandResponse<DadoRespostaComandoCadastrarLocacao>(
                 true,
                 new DadoRespostaComandoCadastrarLocacao(
                     locacao.Id,
@@ -52,8 +53,8 @@ namespace Locatudo.Domain.Executores
                     equipamento.Nome,
                     locatario.Id,
                     locatario.Nome.ToString(),
-                    locacao.Horario.Inicio,
-                    locacao.Situacao.Valor.ToString()),
+                    locacao.Horario.Start,
+                    locacao.Situacao.Value.ToString()),
                 "Sucesso",
                 "Locação cadastrada");
         }

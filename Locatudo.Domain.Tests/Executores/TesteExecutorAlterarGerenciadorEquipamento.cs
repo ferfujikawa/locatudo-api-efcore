@@ -33,13 +33,13 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAlterarGerenciadorEquipamento(equipamento.Id, departamento.Id);
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
-            resultado.Dado
-                .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Dado")
-                .And.BeOfType<DadoRespostaComandoAlterarGerenciadorEquipamento>("Resultados com sucesso devem ter a propriedade Dado de um tipo específico")
+            resultado.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
+            resultado.Data
+                .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
+                .And.BeOfType<DadoRespostaComandoAlterarGerenciadorEquipamento>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
                 .Which.IdDepartamento.Should().Be(departamento.Id, "O departamento gerenciador do equipamento precisa ser o mesmo cujo IdEquipamento foi passado no comando");
         }
 
@@ -52,12 +52,12 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAlterarGerenciadorEquipamento();
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
-            resultado.Dado.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Dado");
-            resultado.Mensagens.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação");
+            resultado.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
+            resultado.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
+            resultado.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação");
         }
 
         [Theory, AutoMoq]
@@ -79,12 +79,12 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAlterarGerenciadorEquipamento(Guid.NewGuid(), departamento.Id);
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
-            resultado.Dado.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Dado");
-            resultado.Mensagens.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
+            resultado.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
+            resultado.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
+            resultado.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
                 .And.Contain("Equipamento não encontrado", "Quando informado o Id de um equipamento inexistente, o resultado deve conter uma notificação específica");
         }
 
@@ -107,12 +107,12 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAlterarGerenciadorEquipamento(equipamento.Id, Guid.NewGuid());
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
-            resultado.Dado.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Dado");
-            resultado.Mensagens.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
+            resultado.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
+            resultado.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
+            resultado.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
                 .And.Contain("Departamento não encontrado", "Quando informado o Id de um departamento inexistente, o resultado deve conter uma notificação específica");
         }
     }

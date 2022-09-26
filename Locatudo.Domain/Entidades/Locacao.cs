@@ -1,27 +1,27 @@
-﻿using Locatudo.Shared.Entidades;
-using Locatudo.Shared.ObjetosDeValor;
+﻿using Locatudo.Shared.Entities;
+using Locatudo.Shared.ValueObjects;
 
 namespace Locatudo.Domain.Entidades
 {
-    public class Locacao : EntidadeBase
+    public class Locacao : BaseEntity
     {
-        public Locacao(Equipamento equipamento, Usuario locatario, HorarioLocacao horario)
+        public Locacao(Equipamento equipamento, Usuario locatario, RentalTime horario)
         {
             Equipamento = equipamento;
             Locatario = locatario;
-            Situacao = new SituacaoLocacao();
+            Situacao = new RentalStatus();
             Horario = horario;
         }
 
         public Equipamento Equipamento { get; private set; }
         public Usuario Locatario { get; private set; }
         public Funcionario? Aprovador { get; private set; }
-        public SituacaoLocacao Situacao { get; private set; }
-        public HorarioLocacao Horario { get; private set; }
+        public RentalStatus Situacao { get; private set; }
+        public RentalTime Horario { get; private set; }
 
         public bool Aprovar(Funcionario aprovador)
         {
-            if (Situacao.AlterarParaAprovado())
+            if (Situacao.Approve())
             {
                 Aprovador = aprovador;
                 return true;
@@ -30,7 +30,7 @@ namespace Locatudo.Domain.Entidades
         }
         public bool Reprovar(Funcionario aprovador)
         {
-            if (Situacao.AlterarParaReprovado())
+            if (Situacao.Disapprove())
             {
                 Aprovador = aprovador;
                 return true;
@@ -40,7 +40,7 @@ namespace Locatudo.Domain.Entidades
 
         public bool Cancelar()
         {
-            return Situacao.AlterarParaCancelado();
+            return Situacao.Cancel();
         }
 
         public bool PodeSerAprovadaReprovadaPor(Funcionario funcionario)

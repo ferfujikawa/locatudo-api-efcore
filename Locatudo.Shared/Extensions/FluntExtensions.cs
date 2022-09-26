@@ -1,6 +1,6 @@
 ﻿using Flunt.Validations;
 
-namespace Locatudo.Shared.Extensoes
+namespace Locatudo.Shared.Extensions
 {
     public static class FluntExtensions
     {

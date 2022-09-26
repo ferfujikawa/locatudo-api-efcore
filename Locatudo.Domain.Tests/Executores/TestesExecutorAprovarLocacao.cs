@@ -4,12 +4,12 @@ using Locatudo.Domain.Tests.Customizacoes;
 using FluentAssertions;
 using AutoFixture.Xunit2;
 using Locatudo.Domain.Executores.Comandos.Entradas;
-using Locatudo.Shared.ObjetosDeValor;
-using Locatudo.Shared.Enumeradores;
 using Locatudo.Domain.Entidades;
 using Locatudo.Domain.Executores.Comandos.Saidas;
 using Locatudo.Domain.Repositorios;
 using Locatudo.Domain.Executores;
+using Locatudo.Shared.Enumerators;
+using Locatudo.Shared.ValueObjects;
 
 namespace Locatudo.Domain.Tests.Executores
 {
@@ -35,7 +35,7 @@ namespace Locatudo.Domain.Tests.Executores
             equipamento.AlterarGerenciador(departamento);
 
             //Criação do mock de Locacao
-            fixture.Customize<Locacao>(x => x.FromFactory(() => new Locacao(equipamento, fixture.Create<Funcionario>(), fixture.Create<HorarioLocacao>())));
+            fixture.Customize<Locacao>(x => x.FromFactory(() => new Locacao(equipamento, fixture.Create<Funcionario>(), fixture.Create<RentalTime>())));
             var locacao = fixture.Create<Locacao>();
 
             //Setup de retornos de métodos dos repositórios
@@ -47,14 +47,14 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAprovarLocacao(locacao.Id, aprovador.Id);
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
-            resultado.Dado
-                .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Dado")
-                .And.BeOfType<DadoRespostaComandoAprovarLocacao>("Resultados com sucesso devem ter a propriedade Dado de um tipo específico")
-                .Which.Should().Match<DadoRespostaComandoAprovarLocacao>(x => x.IdAprovador.Equals(comando.IdAprovador) && x.Situacao.Equals(ESituacaoLocacao.Aprovado.ToString()), "Ao aprovar a locação, a situação deve ser alterada para Aprovado e Id do aprovador da locação precisa ser o mesmo passado no comando");
+            resultado.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
+            resultado.Data
+                .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
+                .And.BeOfType<DadoRespostaComandoAprovarLocacao>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
+                .Which.Should().Match<DadoRespostaComandoAprovarLocacao>(x => x.IdAprovador.Equals(comando.IdAprovador) && x.Situacao.Equals(ERentalStatus.Approved.ToString()), "Ao aprovar a locação, a situação deve ser alterada para Approved e Id do aprovador da locação precisa ser o mesmo passado no comando");
         }
 
         [Theory, AutoMoq]
@@ -66,12 +66,12 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAprovarLocacao();
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
-            resultado.Dado.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Dado");
-            resultado.Mensagens.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação");
+            resultado.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
+            resultado.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
+            resultado.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação");
         }
 
         [Theory, AutoMoq]
@@ -93,12 +93,12 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAprovarLocacao(Guid.NewGuid(), aprovador.Id);
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
-            resultado.Dado.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Dado");
-            resultado.Mensagens.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
+            resultado.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
+            resultado.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
+            resultado.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
                 .And.Contain("Locação não encontrada.", "Quando informado o Id de uma locação inexistente, o resultado deve conter uma notificação específica");
         }
 
@@ -124,12 +124,12 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAprovarLocacao(locacao.Id, Guid.NewGuid());
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
-            resultado.Dado.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Dado");
-            resultado.Mensagens.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
+            resultado.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
+            resultado.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
+            resultado.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
                 .And.Contain("Funcionário não encontrado", "Quando informado o Id de um funcionário inexistente, o resultado deve conter uma notificação específica");
         }
 
@@ -153,7 +153,7 @@ namespace Locatudo.Domain.Tests.Executores
             equipamento.AlterarGerenciador(departamento);
 
             //Criação do mock de Locacao
-            fixture.Customize<Locacao>(x => x.FromFactory(() => new Locacao(equipamento, fixture.Create<Terceirizado>(), fixture.Create<HorarioLocacao>())));
+            fixture.Customize<Locacao>(x => x.FromFactory(() => new Locacao(equipamento, fixture.Create<Terceirizado>(), fixture.Create<RentalTime>())));
             var locacao = fixture.Create<Locacao>();
 
             //Setup de retornos de métodos dos repositórios
@@ -165,12 +165,12 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAprovarLocacao(locacao.Id, Guid.NewGuid());
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
-            resultado.Dado.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Dado");
-            resultado.Mensagens.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
+            resultado.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
+            resultado.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
+            resultado.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
                 .And.Contain("Aprovador não está lotado no departamento gerenciador do equipamento.", "Quando o aprovador não estiver lotado departamento gerenciador do equipamento, o resultado deve conter uma notificação específica");
         }
 
@@ -194,7 +194,7 @@ namespace Locatudo.Domain.Tests.Executores
             equipamento.AlterarGerenciador(departamento);
 
             //Criação do mock de Locacao
-            fixture.Customize<Locacao>(x => x.FromFactory(() => new Locacao(equipamento, fixture.Create<Terceirizado>(), fixture.Create<HorarioLocacao>())));
+            fixture.Customize<Locacao>(x => x.FromFactory(() => new Locacao(equipamento, fixture.Create<Terceirizado>(), fixture.Create<RentalTime>())));
             var locacao = fixture.Create<Locacao>();
             locacao.Cancelar();
 
@@ -207,12 +207,12 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoAprovarLocacao(locacao.Id, Guid.NewGuid());
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
-            resultado.Dado.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Dado");
-            resultado.Mensagens.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
+            resultado.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
+            resultado.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
+            resultado.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
                 .And.Contain("A situação atual da locação não permite aprovação.", "Locações canceladas não podem ser aprovadas");
         }
     }

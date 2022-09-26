@@ -1,12 +1,13 @@
 ﻿using Locatudo.Domain.Executores.Comandos.Entradas;
 using Locatudo.Domain.Executores.Comandos.Saidas;
 using Locatudo.Domain.Repositorios;
-using Locatudo.Shared.Executores;
 using Locatudo.Shared.Executores.Comandos.Saidas;
+using Locatudo.Shared.Handlers;
+using Locatudo.Shared.Handlers.Commands.Output;
 
 namespace Locatudo.Domain.Executores
 {
-    public class ExecutorCancelarLocacao : IExecutor<ComandoCancelarLocacao, DadoRespostaComandoCancelarLocacao>
+    public class ExecutorCancelarLocacao : IHandler<ComandoCancelarLocacao, DadoRespostaComandoCancelarLocacao>
     {
         private readonly IRepositorioLocacao _repositorioLocacao;
 
@@ -15,21 +16,21 @@ namespace Locatudo.Domain.Executores
             _repositorioLocacao = repositorioLocacao;
         }
 
-        public IRespostaComandoExecutor<DadoRespostaComandoCancelarLocacao> Executar(ComandoCancelarLocacao comando)
+        public IHandlerCommandResponse<DadoRespostaComandoCancelarLocacao> Handle(ComandoCancelarLocacao comando)
         {
-            if (!comando.Validar())
-                return new RespostaGenericaComandoExecutor<DadoRespostaComandoCancelarLocacao>(false, null, comando.Notifications);
+            if (!comando.Validate())
+                return new GenericHandlerCommandResponse<DadoRespostaComandoCancelarLocacao>(false, null, comando.Notifications);
 
             var locacao = _repositorioLocacao.ObterPorId(comando.IdLocacao);
             if (locacao == null)
-                return new RespostaGenericaComandoExecutor<DadoRespostaComandoCancelarLocacao>(false, null, "IdLocacao", "Locação não encontrada.");
+                return new GenericHandlerCommandResponse<DadoRespostaComandoCancelarLocacao>(false, null, "IdLocacao", "Locação não encontrada.");
 
             if (!locacao.Cancelar())
-                return new RespostaGenericaComandoExecutor<DadoRespostaComandoCancelarLocacao>(false, null, "Situacao", "A situação atual da locação não permite cancelamento.");
+                return new GenericHandlerCommandResponse<DadoRespostaComandoCancelarLocacao>(false, null, "Situacao", "A situação atual da locação não permite cancelamento.");
 
-            return new RespostaGenericaComandoExecutor<DadoRespostaComandoCancelarLocacao>(
+            return new GenericHandlerCommandResponse<DadoRespostaComandoCancelarLocacao>(
                 true,
-                new DadoRespostaComandoCancelarLocacao(locacao.Id, locacao.Situacao.Valor.ToString()),
+                new DadoRespostaComandoCancelarLocacao(locacao.Id, locacao.Situacao.Value.ToString()),
                 "Sucesso",
                 "Locação cancelada.");
         }

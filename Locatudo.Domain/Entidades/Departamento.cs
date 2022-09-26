@@ -1,9 +1,9 @@
-﻿using Locatudo.Shared.Entidades;
-using Locatudo.Shared.ObjetosDeValor;
+﻿using Locatudo.Shared.Entities;
+using Locatudo.Shared.ValueObjects;
 
 namespace Locatudo.Domain.Entidades
 {
-    public class Departamento : EntidadeBase
+    public class Departamento : BaseEntity
     {
         public Departamento(string nome, Email email) : base()
         {

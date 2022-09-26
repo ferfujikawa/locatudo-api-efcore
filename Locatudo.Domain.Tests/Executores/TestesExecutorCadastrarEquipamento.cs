@@ -18,13 +18,13 @@ namespace Locatudo.Domain.Tests.Executores
             var executor = fixture.Create<ExecutorCadastrarEquipamento>();
 
             //Act
-            var resultado = executor.Executar(_comandoValido);
+            var resultado = executor.Handle(_comandoValido);
 
             //Assert
-            resultado.Successo.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
-            resultado.Dado
-                .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Dado")
-                .And.BeOfType<DadoRespostaComandoCadastrarEquipamento>("Resultados com sucesso devem ter a propriedade Dado de um tipo específico")
+            resultado.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
+            resultado.Data
+                .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
+                .And.BeOfType<DadoRespostaComandoCadastrarEquipamento>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
                 .Which.Should().Match<DadoRespostaComandoCadastrarEquipamento>(x => x.Nome.Equals(_comandoValido.Nome), "O nome do novo equipamento deve ser igual ao que foi passado no comando");
         }
 
@@ -37,12 +37,12 @@ namespace Locatudo.Domain.Tests.Executores
             var comando = new ComandoCadastrarEquipamento();
 
             //Act
-            var resultado = executor.Executar(comando);
+            var resultado = executor.Handle(comando);
 
             //Assert
-            resultado.Successo.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
-            resultado.Dado.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Dado");
-            resultado.Mensagens.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação");
+            resultado.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
+            resultado.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
+            resultado.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação");
         }
     }
 }

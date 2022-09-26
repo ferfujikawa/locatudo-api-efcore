@@ -2,12 +2,13 @@
 using Locatudo.Domain.Executores.Comandos.Saidas;
 using Locatudo.Domain.Repositorios;
 using Locatudo.Domain.Entidades;
-using Locatudo.Shared.Executores;
 using Locatudo.Shared.Executores.Comandos.Saidas;
+using Locatudo.Shared.Handlers;
+using Locatudo.Shared.Handlers.Commands.Output;
 
 namespace Locatudo.Domain.Executores
 {
-    public class ExecutorCadastrarEquipamento : IExecutor<ComandoCadastrarEquipamento, DadoRespostaComandoCadastrarEquipamento>
+    public class ExecutorCadastrarEquipamento : IHandler<ComandoCadastrarEquipamento, DadoRespostaComandoCadastrarEquipamento>
     {
         private readonly IRepositorioEquipamento _repositorioEquipamento;
 
@@ -16,15 +17,15 @@ namespace Locatudo.Domain.Executores
             _repositorioEquipamento = repositorioEquipamento;
         }
 
-        public IRespostaComandoExecutor<DadoRespostaComandoCadastrarEquipamento> Executar(ComandoCadastrarEquipamento comando)
+        public IHandlerCommandResponse<DadoRespostaComandoCadastrarEquipamento> Handle(ComandoCadastrarEquipamento comando)
         {
-            if (!comando.Validar())
-                return new RespostaGenericaComandoExecutor<DadoRespostaComandoCadastrarEquipamento>(false, null, comando.Notifications);
+            if (!comando.Validate())
+                return new GenericHandlerCommandResponse<DadoRespostaComandoCadastrarEquipamento>(false, null, comando.Notifications);
 
             var equipamento = new Equipamento(comando.Nome);
             _repositorioEquipamento.Criar(equipamento);
 
-            return new RespostaGenericaComandoExecutor<DadoRespostaComandoCadastrarEquipamento>(
+            return new GenericHandlerCommandResponse<DadoRespostaComandoCadastrarEquipamento>(
                 true,
                 new DadoRespostaComandoCadastrarEquipamento(equipamento.Id, equipamento.Nome),
                 "Sucesso",

@@ -1,6 +1,6 @@
 ﻿using Flunt.Validations;
 using Locatudo.Domain.Executores.Comandos.Entradas;
-using Locatudo.Shared.Extensoes;
+using Locatudo.Shared.Extensions;
 
 namespace Locatudo.Domain.Executores.Comandos.Contratos
 {

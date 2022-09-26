@@ -12,8 +12,8 @@ namespace Locatudo.Domain.Executores.Comandos.Contratos
             Requires()
                 .AreNotEquals(comando.IdEquipamento, default, "IdEquipamento", "É necessário informar o IdEquipamento do equipamento que está sendo locado")
                 .AreNotEquals(comando.IdLocatario, default, "IdLocatario", "É necessário informar o IdEquipamento da usuário que está locando o equipamento")
-                .AreNotEquals(comando.Inicio, new DateTime(), "Inicio", "É necessário informar o horário de início da locação")
-                .IsGreaterThan(inicio, DateTime.Now, "Inicio", "Início da locação não pode ser no passado");
+                .AreNotEquals(comando.Inicio, new DateTime(), "Start", "É necessário informar o horário de início da locação")
+                .IsGreaterThan(inicio, DateTime.Now, "Start", "Início da locação não pode ser no passado");
         }
     }
 }

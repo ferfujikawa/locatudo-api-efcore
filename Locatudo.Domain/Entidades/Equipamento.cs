@@ -1,8 +1,8 @@
-﻿using Locatudo.Shared.Entidades;
+﻿using Locatudo.Shared.Entities;
 
 namespace Locatudo.Domain.Entidades
 {
-    public class Equipamento : EntidadeBase
+    public class Equipamento : BaseEntity
     {
         public Equipamento(string nome) : base()
         {

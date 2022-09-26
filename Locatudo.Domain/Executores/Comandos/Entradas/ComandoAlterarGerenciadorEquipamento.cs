@@ -1,10 +1,10 @@
 ﻿using Flunt.Notifications;
 using Locatudo.Domain.Executores.Comandos.Contratos;
-using Locatudo.Shared.Executores.Comandos.Entradas;
+using Locatudo.Shared.Handlers.Commands.Input;
 
 namespace Locatudo.Domain.Executores.Comandos.Entradas
 {
-    public class ComandoAlterarGerenciadorEquipamento : Notifiable<Notification>, IComandoExecutor
+    public class ComandoAlterarGerenciadorEquipamento : Notifiable<Notification>, IHandlerCommand
     {
         public Guid Id { get; set; }
         public Guid IdDepartamento { get; set; }
@@ -19,7 +19,7 @@ namespace Locatudo.Domain.Executores.Comandos.Entradas
             IdDepartamento = idDepartamento;
         }
 
-        public bool Validar()
+        public bool Validate()
         {
             AddNotifications(new ContratoComandoAlterarGerenciadorEquipamento(this));
 
