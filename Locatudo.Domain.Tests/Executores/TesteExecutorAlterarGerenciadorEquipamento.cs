@@ -6,10 +6,10 @@ using Locatudo.Dominio.Executores;
 using Locatudo.Dominio.Executores.Comandos.Entradas;
 using Locatudo.Dominio.Executores.Comandos.Saidas;
 using Locatudo.Dominio.Repositorios;
-using Locatudo.Dominio.Testes.Customizacoes;
+using Locatudo.Domain.Tests.Customizacoes;
 using Moq;
 
-namespace Locatudo.Dominio.Testes.Executores
+namespace Locatudo.Domain.Tests.Executores
 {
     public class TesteExecutorAlterarGerenciadorEquipamento
     {
@@ -71,7 +71,7 @@ namespace Locatudo.Dominio.Testes.Executores
             var departamento = fixture.Create<Departamento>();
 
             //Setup de retornos de métodos dos repositórios
-            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Equipamento?) null);
+            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Equipamento?)null);
             repositorioDepartamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(departamento);
 
             //Mock de executor e instância de comando
@@ -100,7 +100,7 @@ namespace Locatudo.Dominio.Testes.Executores
 
             //Setup de retornos de métodos dos repositórios
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
-            repositorioDepartamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Departamento?) null);
+            repositorioDepartamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Departamento?)null);
 
             //Mock de executor e instância de comando
             var executor = fixture.Create<ExecutorAlterarGerenciadorEquipamento>();

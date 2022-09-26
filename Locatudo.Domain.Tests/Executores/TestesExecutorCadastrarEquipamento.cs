@@ -1,15 +1,15 @@
 ﻿using Locatudo.Dominio.Executores;
-using Locatudo.Dominio.Testes.Customizacoes;
+using Locatudo.Domain.Tests.Customizacoes;
 using FluentAssertions;
 using AutoFixture;
 using Locatudo.Dominio.Executores.Comandos.Entradas;
 using Locatudo.Dominio.Executores.Comandos.Saidas;
 
-namespace Locatudo.Dominio.Testes.Executores
+namespace Locatudo.Domain.Tests.Executores
 {
     public class TestesExecutorCadastrarEquipamento
     {
-        private readonly ComandoCadastrarEquipamento _comandoValido = new ("Equipamento teste 123");
+        private readonly ComandoCadastrarEquipamento _comandoValido = new("Equipamento teste 123");
 
         [Theory, AutoMoq]
         public void Comando_Valido_CadastrarEquipamento(IFixture fixture)

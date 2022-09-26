@@ -6,12 +6,12 @@ using Locatudo.Dominio.Executores;
 using Locatudo.Dominio.Executores.Comandos.Entradas;
 using Locatudo.Dominio.Executores.Comandos.Saidas;
 using Locatudo.Dominio.Repositorios;
-using Locatudo.Dominio.Testes.Customizacoes;
+using Locatudo.Domain.Tests.Customizacoes;
 using Locatudo.Shared.Enumeradores;
 using Locatudo.Shared.ObjetosDeValor;
 using Moq;
 
-namespace Locatudo.Dominio.Testes.Executores
+namespace Locatudo.Domain.Tests.Executores
 {
     public class TestesExecutorCadastrarLocacao
     {
@@ -77,7 +77,7 @@ namespace Locatudo.Dominio.Testes.Executores
             var terceirizado = fixture.Create<Terceirizado>();
 
             //Setup de retornos de métodos dos repositórios
-            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Equipamento?) null);
+            repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Equipamento?)null);
             repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(terceirizado);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
 
@@ -108,7 +108,7 @@ namespace Locatudo.Dominio.Testes.Executores
 
             //Setup de retornos de métodos dos repositórios
             repositorioEquipamento.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns(equipamento);
-            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Terceirizado?) null);
+            repositorioUsuario.Setup(x => x.ObterPorId(It.IsAny<Guid>())).Returns((Terceirizado?)null);
             repositorioLocacao.Setup(x => x.VerificarDisponibilidade(It.IsAny<Guid>(), It.IsAny<HorarioLocacao>())).Returns(true);
 
             //Criação do mock do executor e comando

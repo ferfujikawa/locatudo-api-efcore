@@ -2,7 +2,7 @@
 using AutoFixture.AutoMoq;
 using AutoFixture.Xunit2;
 
-namespace Locatudo.Dominio.Testes.Customizacoes
+namespace Locatudo.Domain.Tests.Customizacoes
 {
     public class AutoMoqAttribute : AutoDataAttribute
     {

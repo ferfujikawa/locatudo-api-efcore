@@ -6,12 +6,12 @@ using Locatudo.Dominio.Executores;
 using Locatudo.Dominio.Executores.Comandos.Entradas;
 using Locatudo.Dominio.Executores.Comandos.Saidas;
 using Locatudo.Dominio.Repositorios;
-using Locatudo.Dominio.Testes.Customizacoes;
+using Locatudo.Domain.Tests.Customizacoes;
 using Locatudo.Shared.Enumeradores;
 using Locatudo.Shared.ObjetosDeValor;
 using Moq;
 
-namespace Locatudo.Dominio.Testes.Executores
+namespace Locatudo.Domain.Tests.Executores
 {
     public class TestesExecutorCancelarLocacao
     {

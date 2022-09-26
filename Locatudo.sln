@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locatudo.Shared", "Locatudo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locatudo.Dominio", "Locatudo.Dominio\Locatudo.Dominio.csproj", "{1915DB29-87B1-4C86-B594-2A1CEDDB221C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locatudo.Dominio.Testes", "Locatudo.Dominio.Testes\Locatudo.Dominio.Testes.csproj", "{D195ABAE-E688-46F2-B8A5-F711AE934099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locatudo.Domain.Tests", "Locatudo.Domain.Tests\Locatudo.Domain.Tests.csproj", "{D195ABAE-E688-46F2-B8A5-F711AE934099}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
