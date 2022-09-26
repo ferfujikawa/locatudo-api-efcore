@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Locatudo.Shared\Locatudo.Shared.csproj" />
-    <ProjectReference Include="..\Locatudo.Dominio\Locatudo.Dominio.csproj" />
+    <ProjectReference Include="..\Locatudo.Domain\Locatudo.Domain.csproj" />
   </ItemGroup>
 
 </Project>

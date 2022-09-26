@@ -1,15 +1,15 @@
 ﻿using AutoFixture;
 using AutoFixture.Xunit2;
 using FluentAssertions;
-using Locatudo.Dominio.Entidades;
-using Locatudo.Dominio.Executores;
-using Locatudo.Dominio.Executores.Comandos.Entradas;
-using Locatudo.Dominio.Executores.Comandos.Saidas;
-using Locatudo.Dominio.Repositorios;
+using Locatudo.Domain.Executores.Comandos.Entradas;
 using Locatudo.Domain.Tests.Customizacoes;
 using Locatudo.Shared.Enumeradores;
 using Locatudo.Shared.ObjetosDeValor;
 using Moq;
+using Locatudo.Domain.Entidades;
+using Locatudo.Domain.Repositorios;
+using Locatudo.Domain.Executores;
+using Locatudo.Domain.Executores.Comandos.Saidas;
 
 namespace Locatudo.Domain.Tests.Executores
 {

@@ -1,9 +1,9 @@
-﻿using Locatudo.Dominio.Executores;
-using Locatudo.Domain.Tests.Customizacoes;
+﻿using Locatudo.Domain.Tests.Customizacoes;
 using FluentAssertions;
 using AutoFixture;
-using Locatudo.Dominio.Executores.Comandos.Entradas;
-using Locatudo.Dominio.Executores.Comandos.Saidas;
+using Locatudo.Domain.Executores.Comandos.Saidas;
+using Locatudo.Domain.Executores.Comandos.Entradas;
+using Locatudo.Domain.Executores;
 
 namespace Locatudo.Domain.Tests.Executores
 {
