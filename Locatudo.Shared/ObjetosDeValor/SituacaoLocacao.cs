@@ -1,6 +1,6 @@
-﻿using Locatudo.Compartilhado.Enumeradores;
+﻿using Locatudo.Shared.Enumeradores;
 
-namespace Locatudo.Compartilhado.ObjetosDeValor
+namespace Locatudo.Shared.ObjetosDeValor
 {
     public class SituacaoLocacao
     {

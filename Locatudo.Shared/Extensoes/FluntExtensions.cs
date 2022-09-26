@@ -1,6 +1,6 @@
 ﻿using Flunt.Validations;
 
-namespace Locatudo.Compartilhado.Extensoes
+namespace Locatudo.Shared.Extensoes
 {
     public static class FluntExtensions
     {
@@ -8,7 +8,7 @@ namespace Locatudo.Compartilhado.Extensoes
         {
             if (string.IsNullOrEmpty(val) || val.Length < comparer)
                 contract.AddNotification(key, message);
-                
+
             return contract;
         }
 

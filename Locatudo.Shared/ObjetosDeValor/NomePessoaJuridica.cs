@@ -1,4 +1,4 @@
-﻿namespace Locatudo.Compartilhado.ObjetosDeValor
+﻿namespace Locatudo.Shared.ObjetosDeValor
 {
     public class NomePessoaJuridica
     {

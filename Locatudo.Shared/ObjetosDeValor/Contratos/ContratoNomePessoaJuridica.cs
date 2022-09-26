@@ -1,6 +1,7 @@
 ﻿using Flunt.Validations;
+using Locatudo.Shared.ObjetosDeValor;
 
-namespace Locatudo.Compartilhado.ObjetosDeValor.Contratos
+namespace Locatudo.Shared.ObjetosDeValor.Contratos
 {
     public class ContratoNomePessoaJuridica : Contract<NomePessoaJuridica>
     {

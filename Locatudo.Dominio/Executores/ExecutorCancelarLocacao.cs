@@ -1,8 +1,8 @@
-﻿using Locatudo.Compartilhado.Executores;
-using Locatudo.Compartilhado.Executores.Comandos.Saidas;
-using Locatudo.Dominio.Executores.Comandos.Entradas;
+﻿using Locatudo.Dominio.Executores.Comandos.Entradas;
 using Locatudo.Dominio.Executores.Comandos.Saidas;
 using Locatudo.Dominio.Repositorios;
+using Locatudo.Shared.Executores;
+using Locatudo.Shared.Executores.Comandos.Saidas;
 
 namespace Locatudo.Dominio.Executores
 {

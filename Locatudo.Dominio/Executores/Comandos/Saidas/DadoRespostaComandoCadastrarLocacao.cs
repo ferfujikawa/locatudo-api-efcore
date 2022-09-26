@@ -1,4 +1,4 @@
-﻿using Locatudo.Compartilhado.Executores.Comandos.Saidas;
+﻿using Locatudo.Shared.Executores.Comandos.Saidas;
 
 namespace Locatudo.Dominio.Executores.Comandos.Saidas
 {

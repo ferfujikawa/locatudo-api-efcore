@@ -1,6 +1,6 @@
 ﻿using Flunt.Notifications;
-using Locatudo.Compartilhado.Executores.Comandos.Entradas;
 using Locatudo.Dominio.Executores.Comandos.Contratos;
+using Locatudo.Shared.Executores.Comandos.Entradas;
 
 namespace Locatudo.Dominio.Executores.Comandos.Entradas
 {

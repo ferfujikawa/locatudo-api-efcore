@@ -1,6 +1,6 @@
 ﻿using Flunt.Notifications;
 
-namespace Locatudo.Compartilhado.Executores.Comandos.Saidas
+namespace Locatudo.Shared.Executores.Comandos.Saidas
 {
     public class RespostaGenericaComandoExecutor<T> : IRespostaComandoExecutor<T> where T : IDadoRespostaComandoExecutor
     {

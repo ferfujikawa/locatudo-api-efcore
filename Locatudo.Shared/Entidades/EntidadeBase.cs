@@ -1,4 +1,4 @@
-﻿namespace Locatudo.Compartilhado.Entidades
+﻿namespace Locatudo.Shared.Entidades
 {
     public abstract class EntidadeBase
     {

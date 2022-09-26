@@ -1,5 +1,5 @@
-﻿using Locatudo.Compartilhado.Entidades;
-using Locatudo.Compartilhado.ObjetosDeValor;
+﻿using Locatudo.Shared.Entidades;
+using Locatudo.Shared.ObjetosDeValor;
 
 namespace Locatudo.Dominio.Entidades
 {

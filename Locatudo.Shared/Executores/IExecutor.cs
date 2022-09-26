@@ -1,7 +1,7 @@
-﻿using Locatudo.Compartilhado.Executores.Comandos.Entradas;
-using Locatudo.Compartilhado.Executores.Comandos.Saidas;
+﻿using Locatudo.Shared.Executores.Comandos.Entradas;
+using Locatudo.Shared.Executores.Comandos.Saidas;
 
-namespace Locatudo.Compartilhado.Executores
+namespace Locatudo.Shared.Executores
 {
     public interface IExecutor<T, U> where T : IComandoExecutor where U : IDadoRespostaComandoExecutor
     {

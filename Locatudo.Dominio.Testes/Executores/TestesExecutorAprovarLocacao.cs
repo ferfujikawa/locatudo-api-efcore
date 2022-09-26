@@ -6,10 +6,10 @@ using Moq;
 using Locatudo.Dominio.Testes.Customizacoes;
 using FluentAssertions;
 using AutoFixture.Xunit2;
-using Locatudo.Compartilhado.ObjetosDeValor;
-using Locatudo.Compartilhado.Enumeradores;
 using Locatudo.Dominio.Executores.Comandos.Entradas;
 using Locatudo.Dominio.Executores.Comandos.Saidas;
+using Locatudo.Shared.ObjetosDeValor;
+using Locatudo.Shared.Enumeradores;
 
 namespace Locatudo.Dominio.Testes.Executores
 {

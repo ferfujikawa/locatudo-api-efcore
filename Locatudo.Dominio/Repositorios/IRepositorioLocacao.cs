@@ -1,6 +1,6 @@
-﻿using Locatudo.Compartilhado.ObjetosDeValor;
-using Locatudo.Compartilhado.Repositorios;
-using Locatudo.Dominio.Entidades;
+﻿using Locatudo.Dominio.Entidades;
+using Locatudo.Shared.ObjetosDeValor;
+using Locatudo.Shared.Repositorios;
 
 namespace Locatudo.Dominio.Repositorios
 {

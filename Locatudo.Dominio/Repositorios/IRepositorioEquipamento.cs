@@ -1,5 +1,5 @@
-﻿using Locatudo.Compartilhado.Repositorios;
-using Locatudo.Dominio.Entidades;
+﻿using Locatudo.Dominio.Entidades;
+using Locatudo.Shared.Repositorios;
 
 namespace Locatudo.Dominio.Repositorios
 {

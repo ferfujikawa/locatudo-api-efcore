@@ -1,4 +1,4 @@
-﻿namespace Locatudo.Compartilhado.Executores.Comandos.Entradas
+﻿namespace Locatudo.Shared.Executores.Comandos.Entradas
 {
     public interface IComandoExecutor
     {

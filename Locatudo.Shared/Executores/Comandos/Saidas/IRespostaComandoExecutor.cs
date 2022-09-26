@@ -1,4 +1,4 @@
-﻿namespace Locatudo.Compartilhado.Executores.Comandos.Saidas
+﻿namespace Locatudo.Shared.Executores.Comandos.Saidas
 {
     public interface IRespostaComandoExecutor<T> where T : IDadoRespostaComandoExecutor
     {

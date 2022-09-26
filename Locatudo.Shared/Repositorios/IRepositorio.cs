@@ -1,6 +1,6 @@
-﻿using Locatudo.Compartilhado.Entidades;
+﻿using Locatudo.Shared.Entidades;
 
-namespace Locatudo.Compartilhado.Repositorios
+namespace Locatudo.Shared.Repositorios
 {
     public interface IRepositorio<T> where T : EntidadeBase
     {

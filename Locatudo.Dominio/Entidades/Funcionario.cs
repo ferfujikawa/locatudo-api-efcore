@@ -1,4 +1,4 @@
-﻿using Locatudo.Compartilhado.ObjetosDeValor;
+﻿using Locatudo.Shared.ObjetosDeValor;
 
 namespace Locatudo.Dominio.Entidades
 {

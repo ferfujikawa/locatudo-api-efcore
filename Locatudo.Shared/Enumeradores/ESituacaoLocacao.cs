@@ -1,4 +1,4 @@
-﻿namespace Locatudo.Compartilhado.Enumeradores
+﻿namespace Locatudo.Shared.Enumeradores
 {
     public enum ESituacaoLocacao
     {
