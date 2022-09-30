@@ -3,8 +3,8 @@ using Locatudo.Shared.Handlers.Commands.Output;
 
 namespace Locatudo.Shared.Handlers
 {
-    public interface IHandler<T, U> where T : IHandlerCommand where U : IHandlerCommandData
+    public interface IHandler<T, U> where T : ICommand where U : ICommandData
     {
-        IHandlerCommandResponse<U> Handle(T command);
+        ICommandResponse<U> Handle(T command);
     }
 }
