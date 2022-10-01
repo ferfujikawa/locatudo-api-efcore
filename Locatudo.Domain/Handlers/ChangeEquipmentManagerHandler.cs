@@ -31,7 +31,7 @@ namespace Locatudo.Domain.Handlers
                 return new GenericHandlerResponse<ChangeEquipmentManagerCommandResponse>(false, null, "DepartmentId", "Departamento não encontrado");
 
             equipment.ChangeManager(departamento);
-            _equipmentRepository.Change(equipment);
+            _equipmentRepository.Update(equipment);
 
             return new GenericHandlerResponse<ChangeEquipmentManagerCommandResponse>(
                 true,
