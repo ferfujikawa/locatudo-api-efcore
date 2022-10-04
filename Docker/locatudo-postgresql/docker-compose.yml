@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "Locatudo@123"
+    volumes:
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "15432:5432"
+    networks:
+      - locatudo-network
+      
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "postgres@locatudo.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "postgres@locatudo"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+    networks:
+      - locatudo-network
+
+networks: 
+  locatudo-network:
+    driver: bridge
