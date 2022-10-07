@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.InjectConnection(connectionString);
 builder.Services.InjectRepositories();
+builder.Services.InjectHandlers();
 
 var app = builder.Build();
 

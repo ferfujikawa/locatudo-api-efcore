@@ -18,6 +18,12 @@ namespace Locatudo.Api.Extensions
         public static void InjectRepositories(this IServiceCollection services)
         {
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<IEquipmentRepository, EquipmentRepository>();
+        }
+
+        public static void InjectHandlers(this IServiceCollection services)
+        {
+            services.AddTransient<CreateEquipmentHandler>();
         }
     }
 }

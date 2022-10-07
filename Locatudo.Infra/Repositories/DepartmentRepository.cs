@@ -41,7 +41,7 @@ namespace Locatudo.Infra.Repositories
 
         public IEnumerable<Department> List()
         {
-            return _context.Departments.ToList();
+            return _context.Departments.AsNoTracking().ToList();
         }
     }
 }

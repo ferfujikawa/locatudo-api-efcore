@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Locatudo.Infra.Data.Mappings
 {
-    public class DepartmentMap : IEntityTypeConfiguration<Department>
+    public class EquipmentMap : IEntityTypeConfiguration<Equipment>
     {
-        public void Configure(EntityTypeBuilder<Department> builder)
+        public void Configure(EntityTypeBuilder<Equipment> builder)
         {
-            builder.ToTable("departments", "public");
+            builder.ToTable("equipments", "public");
 
             builder.HasKey(x => x.Id);
 
@@ -19,13 +19,6 @@ namespace Locatudo.Infra.Data.Mappings
 
             builder.Property(x => x.Name)
                 .HasColumnName("name")
-                .HasColumnType("VARCHAR")
-                .IsRequired()
-                .HasMaxLength(100);
-
-            builder.OwnsOne(x => x.Email)
-                .Property(x => x.Address)
-                .HasColumnName("email")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(100);

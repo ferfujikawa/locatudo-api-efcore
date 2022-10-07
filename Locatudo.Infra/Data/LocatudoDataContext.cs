@@ -7,6 +7,7 @@ namespace Locatudo.Infra.Data
     public class LocatudoDataContext : DbContext
     {
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
         public LocatudoDataContext(DbContextOptions options) : base(options)
         {
         }
@@ -14,6 +15,7 @@ namespace Locatudo.Infra.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new DepartmentMap());
+            modelBuilder.ApplyConfiguration(new EquipmentMap());
         }
     }
 }
