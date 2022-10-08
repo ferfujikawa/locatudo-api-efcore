@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locatudo.Domain", "Locatudo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locatudo.Domain.Tests", "Locatudo.Domain.Tests\Locatudo.Domain.Tests.csproj", "{D195ABAE-E688-46F2-B8A5-F711AE934099}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Locatudo.Infra", "Locatudo.Infra\Locatudo.Infra.csproj", "{1B802790-E73D-4005-ACD9-249130E28481}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locatudo.Infra", "Locatudo.Infra\Locatudo.Infra.csproj", "{1B802790-E73D-4005-ACD9-249130E28481}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Locatudo.Api", "Locatudo.Api\Locatudo.Api.csproj", "{FF9E88A7-604B-44F6-993C-DBEEC72AFA2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locatudo.Api", "Locatudo.Api\Locatudo.Api.csproj", "{FF9E88A7-604B-44F6-993C-DBEEC72AFA2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

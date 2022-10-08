@@ -5,6 +5,7 @@ namespace Locatudo.Domain.Entities
 {
     public abstract class User : BaseEntity
     {
+        protected User() { }
         public User(PersonName name, Email email) : base()
         {
             Name = name;
