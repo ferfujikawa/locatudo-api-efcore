@@ -8,7 +8,7 @@ namespace Locatudo.Api.Controllers
     public class EmployeeController : Controller
     {
         [HttpGet]
-        public IActionResult Create([FromServices] IEmployeeRepository employeeRepository)
+        public IActionResult List([FromServices] IEmployeeRepository employeeRepository)
         {
             var employees = employeeRepository.List();
             return new OkObjectResult(employees);

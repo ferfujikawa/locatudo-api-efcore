@@ -1,6 +1,7 @@
 ﻿using Locatudo.Domain.Handlers.Commands.Inputs;
 using Locatudo.Domain.Handlers;
 using Microsoft.AspNetCore.Mvc;
+using Locatudo.Domain.Repositories;
 
 namespace Locatudo.Api.Controllers
 {
@@ -8,6 +9,13 @@ namespace Locatudo.Api.Controllers
     [Route("v1/equipments")]
     public class EquipmentController : Controller
     {
+        [HttpGet]
+        public IActionResult List([FromServices] IEquipmentRepository equipmentRepository)
+        {
+            var equipments = equipmentRepository.List();
+            return new OkObjectResult(equipments);
+        }
+
         [HttpPost]
         public IActionResult Create(
             [FromServices] CreateEquipmentHandler handler,

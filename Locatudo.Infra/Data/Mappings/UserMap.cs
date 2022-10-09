@@ -2,12 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Locatudo.Infra.Data.Mappings.Extensions
+namespace Locatudo.Infra.Data.Mappings
 {
-    public static class EntityTypeBuilderExtensions
+    public class UserMap : IEntityTypeConfiguration<User>
     {
-        public static void MapUserAttributes<T>(this EntityTypeBuilder<T> builder) where T : User
+        public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("users", "public");
+
+            builder.HasKey(x => x.Id);
+
             builder.Property(x => x.Id)
                 .HasColumnName("id")
                 .HasColumnType("uuid")

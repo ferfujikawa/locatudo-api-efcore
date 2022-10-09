@@ -22,6 +22,10 @@ namespace Locatudo.Infra.Data.Mappings
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.HasOne(x => x.Manager)
+                .WithMany()
+                .HasForeignKey("manager_id");
         }
     }
 }

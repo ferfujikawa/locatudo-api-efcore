@@ -8,9 +8,11 @@ namespace Locatudo.Infra.Data
     {
         public DbSet<Department> Departments { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Outsourced> Outsourceds { get; set; }
         public DbSet<Rental> Rentals { get; set; }
+
         public LocatudoDataContext(DbContextOptions options) : base(options)
         {
         }
@@ -19,6 +21,7 @@ namespace Locatudo.Infra.Data
         {
             modelBuilder.ApplyConfiguration(new DepartmentMap());
             modelBuilder.ApplyConfiguration(new EquipmentMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new EmployeeMap());
             modelBuilder.ApplyConfiguration(new OutsourcedMap());
             modelBuilder.ApplyConfiguration(new RentalMap());

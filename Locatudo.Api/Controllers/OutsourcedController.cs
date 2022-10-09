@@ -8,7 +8,7 @@ namespace Locatudo.Api.Controllers
     public class OutsourcedController : Controller
     {
         [HttpGet]
-        public IActionResult Create([FromServices] IOutsourcedRepository outsourcedRepository)
+        public IActionResult List([FromServices] IOutsourcedRepository outsourcedRepository)
         {
             var outsourceds = outsourcedRepository.List();
             return new OkObjectResult(outsourceds);
