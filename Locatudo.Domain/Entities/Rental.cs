@@ -5,19 +5,20 @@ namespace Locatudo.Domain.Entities
 {
     public class Rental : BaseEntity
     {
-        public Rental(Equipment equipament, User tenant, RentalTime time)
-        {
-            Equipament = equipament;
-            Tenant = tenant;
-            Status = new RentalStatus();
-            Time = time;
-        }
-
-        public Equipment Equipament { get; private set; }
+        public Equipment Equipment { get; private set; }
         public User Tenant { get; private set; }
         public Employee? Appraiser { get; private set; }
         public RentalStatus Status { get; private set; }
         public RentalTime Time { get; private set; }
+
+        protected Rental() { }
+        public Rental(Equipment equipament, User tenant, RentalTime time)
+        {
+            Equipment = equipament;
+            Tenant = tenant;
+            Status = new RentalStatus();
+            Time = time;
+        }
 
         public bool Approve(Employee appraiser)
         {
@@ -45,7 +46,7 @@ namespace Locatudo.Domain.Entities
 
         public bool CanBeEvaluatedBy(Employee employee)
         {
-            return employee.Departament.Id == Equipament.Manager?.Id;
+            return employee.Departament.Id == Equipment.Manager?.Id;
         }
     }
 }

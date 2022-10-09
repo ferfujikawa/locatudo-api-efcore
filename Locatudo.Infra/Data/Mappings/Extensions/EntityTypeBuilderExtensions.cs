@@ -8,8 +8,6 @@ namespace Locatudo.Infra.Data.Mappings.Extensions
     {
         public static void MapUserAttributes<T>(this EntityTypeBuilder<T> builder) where T : User
         {
-            builder.HasKey(x => x.Id);
-
             builder.Property(x => x.Id)
                 .HasColumnName("id")
                 .HasColumnType("uuid")
