@@ -21,3 +21,11 @@ CREATE TABLE public.employees (
 	department_id uuid NOT NULL,
 	CONSTRAINT fk_employee_department FOREIGN KEY (department_id) REFERENCES public.departments (id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
+CREATE TABLE public.outsourceds (
+	id uuid NOT NULL PRIMARY KEY,
+	first_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	company_name VARCHAR(100) NOT NULL
+);
