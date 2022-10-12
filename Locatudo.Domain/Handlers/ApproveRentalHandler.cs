@@ -31,10 +31,12 @@ namespace Locatudo.Domain.Handlers
                 return new GenericHandlerResponse<ApproveRentalCommandResponse>(false, null, "RentalId", "Locação não encontrada.");
 
             if (rental.CanBeEvaluatedBy(appraiser) == false)
-                return new GenericHandlerResponse<ApproveRentalCommandResponse>(false, null, "AppraiserId", "Appraiser não está lotado no departamento gerenciador do equipamento.");
+                return new GenericHandlerResponse<ApproveRentalCommandResponse>(false, null, "AppraiserId", "Aprovador não está lotado no departamento gerenciador do equipamento.");
 
             if (rental.Approve(appraiser) == false)
                 return new GenericHandlerResponse<ApproveRentalCommandResponse>(false, null, "Status", "A situação atual da locação não permite aprovação.");
+
+            _rentalRepository.Update(rental);
 
             return new GenericHandlerResponse<ApproveRentalCommandResponse>(
                 true,

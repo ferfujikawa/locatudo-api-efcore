@@ -29,6 +29,7 @@ namespace Locatudo.Api.Extensions
         {
             services.AddTransient<CreateEquipmentHandler>();
             services.AddTransient<CreateRentalHandler>();
+            services.AddTransient<ApproveRentalHandler>();
         }
     }
 }

@@ -37,7 +37,11 @@ namespace Locatudo.Infra.Repositories
 
         public Employee? GetById(Guid id)
         {
-            return _context.Employees.FirstOrDefault(x => x.Id == id);
+            var employee = _context.Employees.FirstOrDefault(x => x.Id == id);
+            if (employee != null)
+                _context.Entry(employee).Reference(x => x.Departament).Load();
+
+            return employee;
         }
 
         public IEnumerable<Employee> List()

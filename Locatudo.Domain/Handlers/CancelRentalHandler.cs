@@ -27,6 +27,8 @@ namespace Locatudo.Domain.Handlers
             if (!rental.Cancel())
                 return new GenericHandlerResponse<CancelRentalCommandResponse>(false, null, "Status", "A situação atual da locação não permite cancelamento.");
 
+            _rentalRepository.Update(rental);
+
             return new GenericHandlerResponse<CancelRentalCommandResponse>(
                 true,
                 new CancelRentalCommandResponse(rental.Id, rental.Status.Value.ToString()),

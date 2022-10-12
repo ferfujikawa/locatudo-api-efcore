@@ -24,5 +24,15 @@ namespace Locatudo.Api.Controllers
             var response = handler.Handle(command);
             return new OkObjectResult(response);
         }
+
+        [HttpPost]
+        [Route("approve")]
+        public IActionResult Approve(
+            [FromServices] ApproveRentalHandler handler,
+            [FromBody] ApproveRentalCommand command)
+        {
+            var response = handler.Handle(command);
+            return new OkObjectResult(response);
+        }
     }
 }
