@@ -29,6 +29,7 @@ namespace Locatudo.Domain.Entities
             }
             return false;
         }
+
         public bool Disapprove(Employee appraiser)
         {
             if (Status.Disapprove())

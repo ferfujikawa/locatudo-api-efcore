@@ -16,6 +16,16 @@ namespace Locatudo.Api.Controllers
             return new OkObjectResult(rentals);
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetById(
+            [FromServices] IRentalRepository rentalRepository,
+            [FromRoute] Guid id)
+        {
+            var rental = rentalRepository.GetById(id);
+            return new OkObjectResult(rental);
+        }
+
         [HttpPost]
         public IActionResult Create(
             [FromServices] CreateRentalHandler handler,
@@ -25,11 +35,31 @@ namespace Locatudo.Api.Controllers
             return new OkObjectResult(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("approve")]
         public IActionResult Approve(
             [FromServices] ApproveRentalHandler handler,
             [FromBody] ApproveRentalCommand command)
+        {
+            var response = handler.Handle(command);
+            return new OkObjectResult(response);
+        }
+
+        [HttpPut]
+        [Route("cancel")]
+        public IActionResult Cancel(
+            [FromServices] CancelRentalHandler handler,
+            [FromBody] CancelRentalCommand command)
+        {
+            var response = handler.Handle(command);
+            return new OkObjectResult(response);
+        }
+
+        [HttpPut]
+        [Route("disapprove")]
+        public IActionResult Disapprove(
+            [FromServices] DisapproveRentalHandler handler,
+            [FromBody] DisapproveRentalCommand command)
         {
             var response = handler.Handle(command);
             return new OkObjectResult(response);

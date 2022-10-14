@@ -19,8 +19,17 @@ namespace Locatudo.Api.Controllers
         [HttpPost]
         public IActionResult Create(
             [FromServices] CreateEquipmentHandler handler,
-            [FromBody] CreateEquipmentCommand command
-            )
+            [FromBody] CreateEquipmentCommand command)
+        {
+            var response = handler.Handle(command);
+            return new OkObjectResult(response);
+        }
+
+        [HttpPut]
+        [Route("change_manager")]
+        public IActionResult ChangeManager(
+            [FromServices] ChangeEquipmentManagerHandler handler,
+            [FromBody] ChangeEquipmentManagerCommand command)
         {
             var response = handler.Handle(command);
             return new OkObjectResult(response);

@@ -37,7 +37,7 @@ namespace Locatudo.Domain.Handlers
                 true,
                 new ChangeEquipmentManagerCommandResponse(equipment.Id, equipment.Name, departamento.Id, departamento.Name),
                 "Sucesso",
-                "Manager do equipamento alterado");
+                "Departamento gerenciador do equipamento alterado");
         }
     }
 }
