@@ -1,4 +1,6 @@
-﻿using Locatudo.Domain.Repositories;
+﻿using AutoMapper;
+using Locatudo.Domain.Entities.Dtos;
+using Locatudo.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Locatudo.Api.Controllers
@@ -8,10 +10,12 @@ namespace Locatudo.Api.Controllers
     public class DepartmentController : Controller
     {
         [HttpGet]
-        public IActionResult List([FromServices] IDepartmentRepository departmentRepository)
+        public IActionResult List(
+            [FromServices] IDepartmentRepository departmentRepository,
+            [FromServices] IMapper mapper)
         {
             var departments = departmentRepository.List();
-            return new OkObjectResult(departments);
+            return new OkObjectResult(mapper.Map<IEnumerable<DepartmentDto>>(departments));
         }
     }
 }
