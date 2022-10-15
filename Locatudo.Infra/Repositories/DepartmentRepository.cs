@@ -1,4 +1,6 @@
-﻿using Locatudo.Domain.Entities;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Locatudo.Domain.Entities;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +10,12 @@ namespace Locatudo.Infra.Repositories
     public class DepartmentRepository : IDepartmentRepository
     {
         private readonly LocatudoDataContext _context;
+        private readonly IConfigurationProvider _configurationProvider;
 
-        public DepartmentRepository(LocatudoDataContext context)
+        public DepartmentRepository(LocatudoDataContext context, IConfigurationProvider configurationProvider)
         {
             _context = context;
+            _configurationProvider = configurationProvider;
         }
 
         public void Update(Department entity)
@@ -42,6 +46,14 @@ namespace Locatudo.Infra.Repositories
         public IEnumerable<Department> List()
         {
             return _context.Departments.AsNoTracking().ToList();
+        }
+
+        public IEnumerable<T> List<T>()
+        {
+            return _context.Departments
+                .AsNoTracking()
+                .ProjectTo<T>(_configurationProvider)
+                .ToList();
         }
     }
 }

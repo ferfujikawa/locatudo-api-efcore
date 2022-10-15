@@ -2,6 +2,7 @@
 using Locatudo.Domain.Repositories;
 using Locatudo.Domain.Handlers;
 using Locatudo.Domain.Handlers.Commands.Inputs;
+using Locatudo.Domain.Entities.Dtos;
 
 namespace Locatudo.Api.Controllers
 {
@@ -12,7 +13,7 @@ namespace Locatudo.Api.Controllers
         [HttpGet]
         public IActionResult List([FromServices] IRentalRepository rentalRepository)
         {
-            var rentals = rentalRepository.List();
+            var rentals = rentalRepository.List<RentalDto>();
             return new OkObjectResult(rentals);
         }
 

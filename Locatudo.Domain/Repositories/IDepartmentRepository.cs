@@ -5,5 +5,6 @@ namespace Locatudo.Domain.Repositories
 {
     public interface IDepartmentRepository : IRepository<Department>
     {
+        IEnumerable<T> List<T>();
     }
 }

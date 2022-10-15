@@ -1,4 +1,6 @@
-﻿using Locatudo.Domain.Entities;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Locatudo.Domain.Entities;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
 using Locatudo.Shared.ValueObjects;
@@ -9,10 +11,12 @@ namespace Locatudo.Infra.Repositories
     public class RentalRepository : IRentalRepository
     {
         private readonly LocatudoDataContext _context;
+        private readonly IConfigurationProvider _configurationProvider;
 
-        public RentalRepository(LocatudoDataContext context)
+        public RentalRepository(LocatudoDataContext context, IConfigurationProvider configurationProvider)
         {
             _context = context;
+            _configurationProvider = configurationProvider;
         }
 
         public void Update(Rental entity)
@@ -56,6 +60,14 @@ namespace Locatudo.Infra.Repositories
         public bool CheckAvailability(Guid equipmentId, RentalTime start)
         {
             return !_context.Rentals.Any(x => x.Equipment.Id == equipmentId && x.Time.Start == start.Start);
+        }
+
+        public IEnumerable<T> List<T>()
+        {
+            return _context.Rentals
+                .AsNoTracking()
+                .ProjectTo<T>(_configurationProvider)
+                .ToList();
         }
     }
 }
