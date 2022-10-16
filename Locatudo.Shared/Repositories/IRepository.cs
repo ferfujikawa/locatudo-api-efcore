@@ -6,7 +6,9 @@ namespace Locatudo.Shared.Repositories
     {
         void Create(T entity);
         IEnumerable<T> List();
+        IEnumerable<U> List<U>();
         T? GetById(Guid id);
+        U? GetById<U>(Guid id);
         void Update(T entity);
         void Delete(Guid id);
     }

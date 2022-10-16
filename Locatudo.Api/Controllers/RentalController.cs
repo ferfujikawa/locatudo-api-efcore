@@ -23,7 +23,7 @@ namespace Locatudo.Api.Controllers
             [FromServices] IRentalRepository rentalRepository,
             [FromRoute] Guid id)
         {
-            var rental = rentalRepository.GetById(id);
+            var rental = rentalRepository.GetById<RentalDto>(id);
             return new OkObjectResult(rental);
         }
 

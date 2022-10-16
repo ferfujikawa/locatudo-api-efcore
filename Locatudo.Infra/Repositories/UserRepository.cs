@@ -1,4 +1,6 @@
-﻿using Locatudo.Domain.Entities;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Locatudo.Domain.Entities;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +10,12 @@ namespace Locatudo.Infra.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly LocatudoDataContext _context;
+        private readonly IConfigurationProvider _configurationProvider;
 
-        public UserRepository(LocatudoDataContext context)
+        public UserRepository(LocatudoDataContext context, IConfigurationProvider configurationProvider)
         {
             _context = context;
+            _configurationProvider = configurationProvider;
         }
 
         public void Update(User entity)
@@ -41,6 +45,23 @@ namespace Locatudo.Infra.Repositories
         public IEnumerable<User> List()
         {
             return _context.Users.AsNoTracking().ToList();
+        }
+
+        public IEnumerable<U> List<U>()
+        {
+            return _context.Users
+                .AsNoTracking()
+                .ProjectTo<U>(_configurationProvider)
+                .ToList();
+        }
+
+        public U? GetById<U>(Guid id)
+        {
+            return _context.Users
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .ProjectTo<U>(_configurationProvider)
+                .FirstOrDefault();
         }
     }
 }

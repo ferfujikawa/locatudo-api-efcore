@@ -62,12 +62,21 @@ namespace Locatudo.Infra.Repositories
             return !_context.Rentals.Any(x => x.Equipment.Id == equipmentId && x.Time.Start == start.Start);
         }
 
-        public IEnumerable<T> List<T>()
+        public IEnumerable<U> List<U>()
         {
             return _context.Rentals
                 .AsNoTracking()
-                .ProjectTo<T>(_configurationProvider)
+                .ProjectTo<U>(_configurationProvider)
                 .ToList();
+        }
+
+        public U? GetById<U>(Guid id)
+        {
+            return _context.Rentals
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .ProjectTo<U>(_configurationProvider)
+                .FirstOrDefault();
         }
     }
 }

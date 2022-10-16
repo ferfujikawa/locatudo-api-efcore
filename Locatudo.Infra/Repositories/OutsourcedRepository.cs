@@ -1,4 +1,6 @@
-﻿using Locatudo.Domain.Entities;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Locatudo.Domain.Entities;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +10,12 @@ namespace Locatudo.Infra.Repositories
     public class OutsourcedRepository : IOutsourcedRepository
     {
         private readonly LocatudoDataContext _context;
+        private readonly IConfigurationProvider _configurationProvider;
 
-        public OutsourcedRepository(LocatudoDataContext context)
+        public OutsourcedRepository(LocatudoDataContext context, IConfigurationProvider configurationProvider)
         {
             _context = context;
+            _configurationProvider = configurationProvider;
         }
 
         public void Update(Outsourced entity)
@@ -43,6 +47,23 @@ namespace Locatudo.Infra.Repositories
         public IEnumerable<Outsourced> List()
         {
             return _context.Outsourceds.AsNoTracking().ToList();
+        }
+
+        public IEnumerable<U> List<U>()
+        {
+            return _context.Outsourceds
+                .AsNoTracking()
+                .ProjectTo<U>(_configurationProvider)
+                .ToList();
+        }
+
+        public U? GetById<U>(Guid id)
+        {
+            return _context.Outsourceds
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .ProjectTo<U>(_configurationProvider)
+                .FirstOrDefault();
         }
     }
 }

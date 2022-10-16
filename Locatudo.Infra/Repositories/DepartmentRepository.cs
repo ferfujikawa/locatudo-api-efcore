@@ -48,12 +48,21 @@ namespace Locatudo.Infra.Repositories
             return _context.Departments.AsNoTracking().ToList();
         }
 
-        public IEnumerable<T> List<T>()
+        public IEnumerable<U> List<U>()
         {
             return _context.Departments
                 .AsNoTracking()
-                .ProjectTo<T>(_configurationProvider)
+                .ProjectTo<U>(_configurationProvider)
                 .ToList();
+        }
+
+        public U? GetById<U>(Guid id)
+        {
+            return _context.Departments
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .ProjectTo<U>(_configurationProvider)
+                .FirstOrDefault();
         }
     }
 }

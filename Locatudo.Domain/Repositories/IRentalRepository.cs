@@ -7,6 +7,5 @@ namespace Locatudo.Domain.Repositories
     public interface IRentalRepository : IRepository<Rental>
     {
         bool CheckAvailability(Guid equipmentId, RentalTime start);
-        IEnumerable<T> List<T>();
     }
 }
