@@ -26,7 +26,7 @@ namespace Locatudo.Domain.Handlers
             if (appraiser == null)
                 return new GenericHandlerResponse<ApproveRentalCommandResponse>(false, null, "AppraiserId", "Funcionário não encontrado");
 
-            var rental = _rentalRepository.GetById(command.RentalId);
+            var rental = _rentalRepository.GetByIdIncludingEquipment(command.RentalId);
             if (rental == null)
                 return new GenericHandlerResponse<ApproveRentalCommandResponse>(false, null, "RentalId", "Locação não encontrada.");
 

@@ -42,16 +42,9 @@ namespace Locatudo.Infra.Repositories
 
         public Rental? GetById(Guid id)
         {
-            var rental = _context.Rentals
+            return _context.Rentals
                 .AsNoTracking()
                 .FirstOrDefault(x => x.Id == id);
-            if (rental != null)
-            {
-                _context.Entry(rental).Reference(x => x.Equipment).Load();
-                _context.Entry(rental).Reference(x => x.Equipment).TargetEntry?.Reference(y => y.Manager).Load();
-            }
-
-            return rental;
         }
 
         public IEnumerable<Rental> List()
@@ -81,6 +74,14 @@ namespace Locatudo.Infra.Repositories
                 .Where(x => x.Id == id)
                 .ProjectTo<U>(_configurationProvider)
                 .FirstOrDefault();
+        }
+
+        public Rental? GetByIdIncludingEquipment(Guid id)
+        {
+            return _context.Rentals
+                .AsNoTracking()
+                .Include(x => x.Equipment)
+                .FirstOrDefault(x => x.Id == id);
         }
     }
 }
