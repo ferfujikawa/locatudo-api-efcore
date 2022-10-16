@@ -39,12 +39,16 @@ namespace Locatudo.Infra.Repositories
 
         public Equipment? GetById(Guid id)
         {
-            return _context.Equipments.FirstOrDefault(x => x.Id == id);
+            return _context.Equipments
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Equipment> List()
         {
-            return _context.Equipments.AsNoTracking().ToList();
+            return _context.Equipments
+                .AsNoTracking()
+                .ToList();
         }
 
         public IEnumerable<U> List<U>()

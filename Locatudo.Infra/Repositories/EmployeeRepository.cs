@@ -48,7 +48,9 @@ namespace Locatudo.Infra.Repositories
 
         public IEnumerable<Employee> List()
         {
-            return _context.Employees.AsNoTracking().ToList();
+            return _context.Employees
+                .AsNoTracking()
+                .ToList();
         }
 
         public IEnumerable<U> List<U>()

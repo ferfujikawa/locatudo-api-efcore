@@ -40,12 +40,16 @@ namespace Locatudo.Infra.Repositories
 
         public Department? GetById(Guid id)
         {
-            return _context.Departments.FirstOrDefault(x => x.Id == id);
+            return _context.Departments
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Department> List()
         {
-            return _context.Departments.AsNoTracking().ToList();
+            return _context.Departments
+                .AsNoTracking()
+                .ToList();
         }
 
         public IEnumerable<U> List<U>()

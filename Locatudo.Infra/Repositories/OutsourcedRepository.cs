@@ -41,12 +41,16 @@ namespace Locatudo.Infra.Repositories
 
         public Outsourced? GetById(Guid id)
         {
-            return _context.Outsourceds.FirstOrDefault(x => x.Id == id);
+            return _context.Outsourceds
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Outsourced> List()
         {
-            return _context.Outsourceds.AsNoTracking().ToList();
+            return _context.Outsourceds
+                .AsNoTracking()
+                .ToList();
         }
 
         public IEnumerable<U> List<U>()

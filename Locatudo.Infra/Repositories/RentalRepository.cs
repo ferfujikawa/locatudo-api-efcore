@@ -56,7 +56,9 @@ namespace Locatudo.Infra.Repositories
 
         public IEnumerable<Rental> List()
         {
-            return _context.Rentals.AsNoTracking().ToList();
+            return _context.Rentals
+                .AsNoTracking()
+                .ToList();
         }
 
         public bool CheckAvailability(Guid equipmentId, RentalTime start)

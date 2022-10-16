@@ -39,12 +39,16 @@ namespace Locatudo.Infra.Repositories
 
         public User? GetById(Guid id)
         {
-            return _context.Users.FirstOrDefault(x => x.Id == id);
+            return _context.Users
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<User> List()
         {
-            return _context.Users.AsNoTracking().ToList();
+            return _context.Users
+                .AsNoTracking()
+                .ToList();
         }
 
         public IEnumerable<U> List<U>()
