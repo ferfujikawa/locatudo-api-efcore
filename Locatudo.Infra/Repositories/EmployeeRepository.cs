@@ -22,7 +22,7 @@ namespace Locatudo.Infra.Repositories
         {
             _context.Entry(entity).State = EntityState.Modified;
             _context.Entry(entity.Email).State = EntityState.Modified;
-            _context.Entry(entity.Departament).State = EntityState.Modified;
+            _context.Entry(entity.Department).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
@@ -41,11 +41,9 @@ namespace Locatudo.Infra.Repositories
 
         public Employee? GetById(Guid id)
         {
-            var employee = _context.Employees.FirstOrDefault(x => x.Id == id);
-            if (employee != null)
-                _context.Entry(employee).Reference(x => x.Departament).Load();
-
-            return employee;
+            return _context.Employees
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Employee> List()

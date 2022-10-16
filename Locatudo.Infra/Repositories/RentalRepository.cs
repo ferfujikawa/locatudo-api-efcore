@@ -42,7 +42,9 @@ namespace Locatudo.Infra.Repositories
 
         public Rental? GetById(Guid id)
         {
-            var rental = _context.Rentals.FirstOrDefault(x => x.Id == id);
+            var rental = _context.Rentals
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
             if (rental != null)
             {
                 _context.Entry(rental).Reference(x => x.Equipment).Load();

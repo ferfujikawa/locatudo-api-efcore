@@ -4,17 +4,27 @@ namespace Locatudo.Domain.Entities
 {
     public class Employee : User
     {
-        public Department Departament { get; private set; }
-
-        protected Employee() { }
-        public Employee(PersonName name, Email email, Department departament) : base(name, email)
+        public Guid DepartmentId { get; private set; }
+        private Department _department;
+        public Department Department
         {
-            Departament = departament;
+            get => _department;
+            private set
+            {
+                _department = value;
+                DepartmentId = value.Id;
+            }
         }
 
-        public void ChangeDepartament(Department departament)
+        protected Employee() { }
+        public Employee(PersonName name, Email email, Department department) : base(name, email)
         {
-            Departament = departament;
+            Department = department;
+        }
+
+        public void ChangeDepartament(Department department)
+        {
+            Department = department;
         }
     }
 }

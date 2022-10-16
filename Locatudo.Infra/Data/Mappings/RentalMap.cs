@@ -17,14 +17,24 @@ namespace Locatudo.Infra.Data.Mappings
                 .HasColumnType("uuid")
                 .ValueGeneratedOnAdd();
 
+            builder.Property(x => x.EquipmentId)
+                .HasColumnName("equipment_id")
+                .HasColumnType("uuid")
+                .IsRequired();
+
             builder.HasOne(x => x.Equipment)
                 .WithMany()
-                .HasForeignKey("equipment_id")
+                .HasForeignKey(x => x.EquipmentId)
+                .IsRequired();
+
+            builder.Property(x => x.TenantId)
+                .HasColumnName("tenant_id")
+                .HasColumnType("uuid")
                 .IsRequired();
 
             builder.HasOne(x => x.Tenant)
                 .WithMany()
-                .HasForeignKey("tenant_id")
+                .HasForeignKey(x => x.TenantId)
                 .IsRequired();
 
             builder.OwnsOne(x => x.Status)
@@ -39,9 +49,13 @@ namespace Locatudo.Infra.Data.Mappings
                 .HasColumnType("DATE")
                 .IsRequired();
 
+            builder.Property(x => x.AppraiserId)
+                .HasColumnName("appraiser_id")
+                .HasColumnType("uuid");
+
             builder.HasOne(x => x.Appraiser)
                 .WithMany()
-                .HasForeignKey("appraiser_id");
+                .HasForeignKey(x => x.AppraiserId);
         }
     }
 }

@@ -10,9 +10,14 @@ namespace Locatudo.Infra.Data.Mappings
         {
             builder.ToTable("employees", "public");
 
-            builder.HasOne(x => x.Departament)
+            builder.Property(x => x.DepartmentId)
+                .HasColumnName("department_id")
+                .HasColumnType("uuid")
+                .IsRequired();
+
+            builder.HasOne(x => x.Department)
                 .WithMany()
-                .HasForeignKey("department_id");
+                .HasForeignKey(x => x.DepartmentId);
         }
     }
 }

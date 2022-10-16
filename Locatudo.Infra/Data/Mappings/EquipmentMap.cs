@@ -23,9 +23,14 @@ namespace Locatudo.Infra.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(x => x.ManagerId)
+                .HasColumnName("manager_id")
+                .HasColumnType("uuid")
+                .IsRequired();
+
             builder.HasOne(x => x.Manager)
                 .WithMany()
-                .HasForeignKey("manager_id");
+                .HasForeignKey(x => x.ManagerId);
         }
     }
 }
