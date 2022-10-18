@@ -29,7 +29,7 @@ namespace Locatudo.Infra.Repositories
         public void Create(Employee entity)
         {
             _context.Employees.Add(entity);
-            _context.Entry(entity.Department).State = EntityState.Detached;
+            _context.Attach(entity.Department);
             _context.SaveChanges();
         }
 
