@@ -30,6 +30,8 @@ namespace Locatudo.Infra.Repositories
         public void Create(Rental entity)
         {
             _context.Rentals.Add(entity);
+            _context.Entry(entity.Equipment).State = EntityState.Detached;
+            _context.Entry(entity.Tenant).State = EntityState.Detached;
             _context.SaveChanges();
         }
 
