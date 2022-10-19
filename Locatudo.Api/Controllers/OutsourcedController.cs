@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Locatudo.Domain.Repositories;
+using Locatudo.Domain.Entities.Dtos;
 
 namespace Locatudo.Api.Controllers
 {
@@ -10,7 +11,7 @@ namespace Locatudo.Api.Controllers
         [HttpGet]
         public IActionResult List([FromServices] IOutsourcedRepository outsourcedRepository)
         {
-            var outsourceds = outsourcedRepository.List();
+            var outsourceds = outsourcedRepository.List<OutsourcedDto>();
             return new OkObjectResult(outsourceds);
         }
     }
