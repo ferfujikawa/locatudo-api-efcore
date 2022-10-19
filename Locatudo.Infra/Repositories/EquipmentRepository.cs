@@ -20,7 +20,7 @@ namespace Locatudo.Infra.Repositories
 
         public void Update(Equipment entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.Attach(entity).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

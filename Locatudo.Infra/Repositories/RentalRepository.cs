@@ -21,9 +21,9 @@ namespace Locatudo.Infra.Repositories
 
         public void Update(Rental entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.Entry(entity.Status).State = EntityState.Modified;
-            _context.Entry(entity.Time).State = EntityState.Modified;
+            _context.Attach(entity).State = EntityState.Modified;
+            _context.Attach(entity.Status);
+            _context.Attach(entity.Time);
             _context.SaveChanges();
         }
 

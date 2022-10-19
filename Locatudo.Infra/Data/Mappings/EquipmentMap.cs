@@ -25,8 +25,7 @@ namespace Locatudo.Infra.Data.Mappings
 
             builder.Property(x => x.ManagerId)
                 .HasColumnName("manager_id")
-                .HasColumnType("uuid")
-                .IsRequired();
+                .HasColumnType("uuid");
 
             builder.HasOne(x => x.Manager)
                 .WithMany()

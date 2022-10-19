@@ -40,7 +40,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Setup de retornos de métodos dos repositórios
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
-            rentalRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(rental);
+            rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns(rental);
 
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();
@@ -85,7 +85,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Setup de retornos de métodos dos repositórios
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
-            rentalRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((Rental?)null);
+            rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns((Rental?)null);
 
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();
@@ -156,7 +156,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Setup de retornos de métodos dos repositórios
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
-            rentalRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(rental);
+            rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns(rental);
 
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();
@@ -169,7 +169,7 @@ namespace Locatudo.Domain.Tests.Handlers
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
             result.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
             result.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
-                .And.Contain("Appraiser não está lotado no departamento gerenciador do equipamento.", "Quando o aprovador não estiver lotado departamento gerenciador do equipamento, o resultado deve conter uma notificação específica");
+                .And.Contain("Aprovador não está lotado no departamento gerenciador do equipamento.", "Quando o aprovador não estiver lotado departamento gerenciador do equipamento, o resultado deve conter uma notificação específica");
         }
 
         [Theory, AutoMoq]
@@ -198,7 +198,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Setup de retornos de métodos dos repositórios
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
-            rentalRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(rental);
+            rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns(rental);
 
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();

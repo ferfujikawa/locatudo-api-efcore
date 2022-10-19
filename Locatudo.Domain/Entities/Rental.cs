@@ -39,9 +39,9 @@ namespace Locatudo.Domain.Entities
         public RentalTime Time { get; private set; }
 
         protected Rental() { }
-        public Rental(Equipment equipament, User tenant, RentalTime time)
+        public Rental(Equipment equipment, User tenant, RentalTime time)
         {
-            Equipment = equipament;
+            Equipment = equipment;
             Tenant = tenant;
             Status = new RentalStatus();
             Time = time;

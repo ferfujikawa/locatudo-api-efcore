@@ -20,9 +20,9 @@ namespace Locatudo.Infra.Repositories
 
         public void Update(Outsourced entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.Entry(entity.Email).State = EntityState.Modified;
-            _context.Entry(entity.EnterpriseName).State = EntityState.Modified;
+            _context.Attach(entity).State = EntityState.Modified;
+            _context.Attach(entity.Email);
+            _context.Attach(entity.EnterpriseName);
             _context.SaveChanges();
         }
 
