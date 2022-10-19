@@ -2,6 +2,7 @@
 using Locatudo.Domain.Handlers;
 using Microsoft.AspNetCore.Mvc;
 using Locatudo.Domain.Repositories;
+using Locatudo.Domain.Entities.Dtos;
 
 namespace Locatudo.Api.Controllers
 {
@@ -12,7 +13,7 @@ namespace Locatudo.Api.Controllers
         [HttpGet]
         public IActionResult List([FromServices] IEquipmentRepository equipmentRepository)
         {
-            var equipments = equipmentRepository.List();
+            var equipments = equipmentRepository.List<EquipmentDto>();
             return new OkObjectResult(equipments);
         }
 
