@@ -6,9 +6,11 @@ namespace Locatudo.Api.Controllers
 {
     [ApiController]
     [Route("v1/outsourceds")]
+    [Produces("application/json")]
     public class OutsourcedController : Controller
     {
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OutsourcedDto>))]
         public IActionResult List([FromServices] IOutsourcedRepository outsourcedRepository)
         {
             var outsourceds = outsourcedRepository.List<OutsourcedDto>();

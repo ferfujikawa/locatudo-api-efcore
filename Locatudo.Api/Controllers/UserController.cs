@@ -6,9 +6,11 @@ namespace Locatudo.Api.Controllers
 {
     [ApiController]
     [Route("v1/users")]
+    [Produces("application/json")]
     public class UserController : Controller
     {
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
         public IActionResult List([FromServices] IUserRepository userRepository)
         {
             var users = userRepository.List<UserDto>();

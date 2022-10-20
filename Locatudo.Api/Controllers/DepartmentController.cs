@@ -6,9 +6,11 @@ namespace Locatudo.Api.Controllers
 {
     [ApiController]
     [Route("v1/departments")]
+    [Produces("application/json")]
     public class DepartmentController : Controller
     {
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DepartmentDto>))]
         public IActionResult List([FromServices] IDepartmentRepository departmentRepository)
         {
             var departments = departmentRepository.List<DepartmentDto>();
