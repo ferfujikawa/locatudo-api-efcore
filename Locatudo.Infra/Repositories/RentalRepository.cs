@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Locatudo.Domain.Entities;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
+using Locatudo.Infra.Queries;
 using Locatudo.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,9 @@ namespace Locatudo.Infra.Repositories
         private readonly LocatudoDataContext _context;
         private readonly IConfigurationProvider _configurationProvider;
 
-        public RentalRepository(LocatudoDataContext context, IConfigurationProvider configurationProvider)
+        public RentalRepository(
+            LocatudoDataContext context,
+            IConfigurationProvider configurationProvider)
         {
             _context = context;
             _configurationProvider = configurationProvider;
@@ -37,7 +40,9 @@ namespace Locatudo.Infra.Repositories
 
         public void Delete(Guid id)
         {
-            var rental = _context.Rentals.FirstOrDefault(x => x.Id == id);
+            var rental = _context.Rentals
+                .FilterById(id)
+                .FirstOrDefault();
             if (rental != null)
                 _context.Rentals.Remove(rental);
         }
@@ -46,7 +51,8 @@ namespace Locatudo.Infra.Repositories
         {
             return _context.Rentals
                 .AsNoTracking()
-                .FirstOrDefault(x => x.Id == id);
+                .FilterById(id)
+                .FirstOrDefault();
         }
 
         public IEnumerable<Rental> List()
@@ -56,9 +62,13 @@ namespace Locatudo.Infra.Repositories
                 .ToList();
         }
 
-        public bool CheckAvailability(Guid equipmentId, RentalTime start)
+        public bool CheckAvailability(
+            Guid equipmentId,
+            RentalTime start)
         {
-            return !_context.Rentals.Any(x => x.Equipment.Id == equipmentId && x.Time.Start == start.Start);
+            return !_context.Rentals
+                .FilterByEquipmentIdAndTime(equipmentId, start.Start)
+                .Any();
         }
 
         public IEnumerable<U> List<U>()
@@ -73,7 +83,7 @@ namespace Locatudo.Infra.Repositories
         {
             return _context.Rentals
                 .AsNoTracking()
-                .Where(x => x.Id == id)
+                .FilterById(id)
                 .ProjectTo<U>(_configurationProvider)
                 .FirstOrDefault();
         }
@@ -83,7 +93,8 @@ namespace Locatudo.Infra.Repositories
             return _context.Rentals
                 .AsNoTracking()
                 .Include(x => x.Equipment)
-                .FirstOrDefault(x => x.Id == id);
+                .FilterById(id)
+                .FirstOrDefault();
         }
     }
 }

@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Locatudo.Domain.Entities;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
+using Locatudo.Infra.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace Locatudo.Infra.Repositories
@@ -12,7 +13,9 @@ namespace Locatudo.Infra.Repositories
         private readonly LocatudoDataContext _context;
         private readonly IConfigurationProvider _configurationProvider;
 
-        public DepartmentRepository(LocatudoDataContext context, IConfigurationProvider configurationProvider)
+        public DepartmentRepository(
+            LocatudoDataContext context,
+            IConfigurationProvider configurationProvider)
         {
             _context = context;
             _configurationProvider = configurationProvider;
@@ -33,7 +36,9 @@ namespace Locatudo.Infra.Repositories
 
         public void Delete(Guid id)
         {
-            var department = _context.Departments.FirstOrDefault(x => x.Id == id);
+            var department = _context.Departments
+                .FilterById(id)
+                .FirstOrDefault();
             if (department != null)
                 _context.Departments.Remove(department);
         }
@@ -42,7 +47,8 @@ namespace Locatudo.Infra.Repositories
         {
             return _context.Departments
                 .AsNoTracking()
-                .FirstOrDefault(x => x.Id == id);
+                .FilterById(id)
+                .FirstOrDefault();
         }
 
         public IEnumerable<Department> List()
@@ -64,7 +70,7 @@ namespace Locatudo.Infra.Repositories
         {
             return _context.Departments
                 .AsNoTracking()
-                .Where(x => x.Id == id)
+                .FilterById(id)
                 .ProjectTo<U>(_configurationProvider)
                 .FirstOrDefault();
         }
