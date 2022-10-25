@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Locatudo.Domain.Entities;
+using Locatudo.Domain.Queries;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
-using Locatudo.Infra.Queries;
 using Locatudo.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 

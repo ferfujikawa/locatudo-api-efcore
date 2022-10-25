@@ -1,6 +1,6 @@
 ﻿using Locatudo.Domain.Entities;
 
-namespace Locatudo.Infra.Queries
+namespace Locatudo.Domain.Queries
 {
     public static class RentalQueries
     {
