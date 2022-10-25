@@ -35,16 +35,10 @@ namespace Locatudo.Infra.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(Guid id)
+        public void Delete(Outsourced entity)
         {
-            var outsourced = _context.Outsourceds
-                .FilterById(id)
-                .FirstOrDefault();
-            if (outsourced != null)
-            {
-                _context.Remove(outsourced);
-                _context.SaveChanges();
-            }
+            _context.Remove(entity);
+            _context.SaveChanges();
         }
 
         public Outsourced? GetById(Guid id)

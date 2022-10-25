@@ -10,6 +10,6 @@ namespace Locatudo.Shared.Repositories
         T? GetById(Guid id);
         U? GetById<U>(Guid id);
         void Update(T entity);
-        void Delete(Guid id);
+        void Delete(T entity);
     }
 }

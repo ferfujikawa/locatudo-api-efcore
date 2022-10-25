@@ -33,6 +33,7 @@ namespace Locatudo.Api.Extensions
             services.AddTransient<CancelRentalHandler>();
             services.AddTransient<DisapproveRentalHandler>();
             services.AddTransient<ChangeEquipmentManagerHandler>();
+            services.AddTransient<DeleteOutsourcedHandler>();
         }
     }
 }

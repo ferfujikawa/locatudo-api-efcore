@@ -38,16 +38,10 @@ namespace Locatudo.Infra.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(Guid id)
+        public void Delete(Rental entity)
         {
-            var rental = _context.Rentals
-                .FilterById(id)
-                .FirstOrDefault();
-            if (rental != null)
-            {
-                _context.Remove(rental);
-                _context.SaveChanges();
-            }
+            _context.Remove(entity);
+            _context.SaveChanges();
         }
 
         public Rental? GetById(Guid id)

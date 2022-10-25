@@ -33,16 +33,10 @@ namespace Locatudo.Infra.Repositories
             //Não pode criar um User sem especialização (Employee/Outsourced)
         }
 
-        public void Delete(Guid id)
+        public void Delete(User entity)
         {
-            var user = _context.Users
-                .FilterById(id)
-                .FirstOrDefault();
-            if (user != null)
-            {
-                _context.Remove(user);
-                _context.SaveChanges();
-            }   
+            _context.Remove(entity);
+            _context.SaveChanges();
         }
 
         public User? GetById(Guid id)
