@@ -16,5 +16,15 @@ namespace Locatudo.Api.Controllers
             var outsourceds = outsourcedRepository.List<OutsourcedDto>();
             return new OkObjectResult(outsourceds);
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete(
+            [FromServices] IOutsourcedRepository outsourcedRepository,
+            [FromRoute] Guid id)
+        {
+            outsourcedRepository.Delete(id);
+            return new OkResult();
+        }
     }
 }

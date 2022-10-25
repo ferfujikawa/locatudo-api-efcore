@@ -42,7 +42,10 @@ namespace Locatudo.Infra.Repositories
                 .FilterById(id)
                 .FirstOrDefault();
             if (employee != null)
-                _context.Employees.Remove(employee);
+            {
+                _context.Remove(employee);
+                _context.SaveChanges();
+            }   
         }
 
         public Employee? GetById(Guid id)

@@ -39,7 +39,10 @@ namespace Locatudo.Infra.Repositories
                 .FilterById(id)
                 .FirstOrDefault();
             if (department != null)
-                _context.Equipments.Remove(department);
+            {
+                _context.Remove(department);
+                _context.SaveChanges();
+            }
         }
 
         public Equipment? GetById(Guid id)

@@ -44,7 +44,10 @@ namespace Locatudo.Infra.Repositories
                 .FilterById(id)
                 .FirstOrDefault();
             if (rental != null)
-                _context.Rentals.Remove(rental);
+            {
+                _context.Remove(rental);
+                _context.SaveChanges();
+            }
         }
 
         public Rental? GetById(Guid id)
