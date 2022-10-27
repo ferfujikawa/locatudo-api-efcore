@@ -1,6 +1,6 @@
 ﻿using Locatudo.Shared.Handlers.Commands.Output;
 
-namespace Locatudo.Domain.Queries.Commands.Outputs
+namespace Locatudo.Domain.Handlers.Commands.Outputs
 {
     public class DeleteOutsourcedCommandResponse : ICommandData
     {

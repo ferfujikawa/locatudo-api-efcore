@@ -1,8 +1,8 @@
 ﻿using Flunt.Notifications;
-using Locatudo.Domain.Queries.Commands.Contracts;
+using Locatudo.Domain.Handlers.Commands.Contracts;
 using Locatudo.Shared.Handlers.Commands.Input;
 
-namespace Locatudo.Domain.Queries.Commands.Inputs
+namespace Locatudo.Domain.Handlers.Commands.Inputs
 {
     public class DeleteOutsourcedCommand : Notifiable<Notification>, ICommand
     {
