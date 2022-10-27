@@ -17,11 +17,11 @@ namespace Locatudo.Shared.Handlers.Commands.Output
             _messages = messages;
         }
 
-        public GenericHandlerResponse(bool success, T? data, string? messageKey, string? messages)
+        public GenericHandlerResponse(bool success, T? data, string? messageKey, string? message)
         {
             Success = success;
             Data = data;
-            _messages = new List<Notification>() { new Notification(messageKey, messages) };
+            _messages = new List<Notification>() { new Notification(messageKey, message) };
         }
     }
 }
