@@ -1,7 +1,10 @@
-﻿using Locatudo.Domain.Handlers;
+﻿using Locatudo.Domain.Entities;
+using Locatudo.Domain.Handlers;
+using Locatudo.Domain.Queries.Handlers;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
 using Locatudo.Infra.Repositories;
+using Locatudo.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Locatudo.Api.Extensions

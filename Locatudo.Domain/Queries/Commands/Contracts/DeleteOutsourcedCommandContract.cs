@@ -1,7 +1,7 @@
 ﻿using Flunt.Validations;
-using Locatudo.Domain.Handlers.Commands.Inputs;
+using Locatudo.Domain.Queries.Commands.Inputs;
 
-namespace Locatudo.Domain.Handlers.Commands.Contracts
+namespace Locatudo.Domain.Queries.Commands.Contracts
 {
     public class DeleteOutsourcedCommandContract : Contract<DeleteOutsourcedCommand>
     {

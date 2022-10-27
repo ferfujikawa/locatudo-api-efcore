@@ -1,10 +1,10 @@
-﻿using Locatudo.Domain.Handlers.Commands.Inputs;
-using Locatudo.Domain.Handlers.Commands.Outputs;
+﻿using Locatudo.Domain.Queries.Commands.Inputs;
+using Locatudo.Domain.Queries.Commands.Outputs;
 using Locatudo.Domain.Repositories;
 using Locatudo.Shared.Handlers;
 using Locatudo.Shared.Handlers.Commands.Output;
 
-namespace Locatudo.Domain.Handlers
+namespace Locatudo.Domain.Queries.Handlers
 {
     public class DeleteOutsourcedHandler : IHandler<DeleteOutsourcedCommand, DeleteOutsourcedCommandResponse>
     {
