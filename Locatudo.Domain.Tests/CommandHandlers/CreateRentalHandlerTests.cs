@@ -16,7 +16,7 @@ namespace Locatudo.Domain.Tests.CommandHandlers
     public class CreateRentalHandlerTests
     {
         [Theory, AutoMoq]
-        public void Command_Valid_CreateRental(
+        public void Request_Valid_CreateRental(
             IFixture fixture,
             [Frozen] Mock<IEquipmentRepository> equipmentRepository,
             [Frozen] Mock<IUserRepository> userRepository,
@@ -32,12 +32,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             userRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(outsourced);
             rentalRepository.Setup(x => x.CheckAvailability(It.IsAny<Guid>(), It.IsAny<RentalTime>())).Returns(true);
 
-            //Criação do mock do handler e command
+            //Criação do mock do handler e request
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalRequest(equipment.Id, outsourced.Id, DateTime.Now.AddHours(1));
+            var request = new CreateRentalRequest(equipment.Id, outsourced.Id, DateTime.Now.AddHours(1));
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
@@ -49,15 +49,15 @@ namespace Locatudo.Domain.Tests.CommandHandlers
         }
 
         [Theory, AutoMoq]
-        public void Command_Invalid_GenerateNotification(IFixture fixture)
+        public void Request_Invalid_GenerateNotification(IFixture fixture)
         {
             ////Arrange
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalRequest();
+            var request = new CreateRentalRequest();
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -66,7 +66,7 @@ namespace Locatudo.Domain.Tests.CommandHandlers
         }
 
         [Theory, AutoMoq]
-        public void Command_InvalidEquipment_GenerateNotification(
+        public void Request_InvalidEquipment_GenerateNotification(
             IFixture fixture,
             [Frozen] Mock<IEquipmentRepository> equipmentRepository,
             [Frozen] Mock<IUserRepository> userRepository,
@@ -81,12 +81,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             userRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(outsourced);
             rentalRepository.Setup(x => x.CheckAvailability(It.IsAny<Guid>(), It.IsAny<RentalTime>())).Returns(true);
 
-            //Criação do mock do handler e command
+            //Criação do mock do handler e request
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalRequest(Guid.NewGuid(), outsourced.Id, DateTime.Now.AddHours(1));
+            var request = new CreateRentalRequest(Guid.NewGuid(), outsourced.Id, DateTime.Now.AddHours(1));
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -96,7 +96,7 @@ namespace Locatudo.Domain.Tests.CommandHandlers
         }
 
         [Theory, AutoMoq]
-        public void Command_InvalidRental_GenerateNotification(
+        public void Request_InvalidRental_GenerateNotification(
             IFixture fixture,
             [Frozen] Mock<IEquipmentRepository> equipmentRepository,
             [Frozen] Mock<IUserRepository> userRepository,
@@ -111,12 +111,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             userRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((Outsourced?)null);
             rentalRepository.Setup(x => x.CheckAvailability(It.IsAny<Guid>(), It.IsAny<RentalTime>())).Returns(true);
 
-            //Criação do mock do handler e command
+            //Criação do mock do handler e request
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalRequest(equipment.Id, Guid.NewGuid(), DateTime.Now.AddHours(1));
+            var request = new CreateRentalRequest(equipment.Id, Guid.NewGuid(), DateTime.Now.AddHours(1));
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -126,7 +126,7 @@ namespace Locatudo.Domain.Tests.CommandHandlers
         }
 
         [Theory, AutoMoq]
-        public void Command_UnavailableTime_GenerateNotification(
+        public void Request_UnavailableTime_GenerateNotification(
             IFixture fixture,
             [Frozen] Mock<IEquipmentRepository> equipmentRepository,
             [Frozen] Mock<IUserRepository> userRepository,
@@ -142,12 +142,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             userRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(outsourced);
             rentalRepository.Setup(x => x.CheckAvailability(It.IsAny<Guid>(), It.IsAny<RentalTime>())).Returns(false);
 
-            //Criação do mock do handler e command
+            //Criação do mock do handler e request
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalRequest(equipment.Id, Guid.NewGuid(), DateTime.Now.AddHours(1));
+            var request = new CreateRentalRequest(equipment.Id, Guid.NewGuid(), DateTime.Now.AddHours(1));
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");

@@ -30,8 +30,8 @@ namespace Locatudo.Api.Controllers
             [FromServices] GetRentalByIdHandler handler,
             [FromRoute] Guid id)
         {
-            var command = new GetRentalByIdRequest(id);
-            var response = handler.Handle(command);
+            var request = new GetRentalByIdRequest(id);
+            var response = handler.Handle(request);
             if (!response.Success)
                 return new NotFoundResult();
             return new OkObjectResult(response.Data);
@@ -42,9 +42,9 @@ namespace Locatudo.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Create(
             [FromServices] CreateRentalHandler handler,
-            [FromBody] CreateRentalRequest command)
+            [FromBody] CreateRentalRequest request)
         {
-            var response = handler.Handle(command);
+            var response = handler.Handle(request);
             if (!response.Success)
                 return new BadRequestObjectResult(response.Messages);
             return new CreatedResult("", response.Data);
@@ -56,9 +56,9 @@ namespace Locatudo.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Approve(
             [FromServices] ApproveRentalHandler handler,
-            [FromBody] ApproveRentalRequest command)
+            [FromBody] ApproveRentalRequest request)
         {
-            var response = handler.Handle(command);
+            var response = handler.Handle(request);
             if (!response.Success)
                 return new BadRequestObjectResult(response.Messages);
             return new OkObjectResult(response.Data);
@@ -70,9 +70,9 @@ namespace Locatudo.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Cancel(
             [FromServices] CancelRentalHandler handler,
-            [FromBody] CancelRentalRequest command)
+            [FromBody] CancelRentalRequest request)
         {
-            var response = handler.Handle(command);
+            var response = handler.Handle(request);
             if (!response.Success)
                 return new BadRequestObjectResult(response.Messages);
             return new OkObjectResult(response.Data);
@@ -84,9 +84,9 @@ namespace Locatudo.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Disapprove(
             [FromServices] DisapproveRentalHandler handler,
-            [FromBody] DisapproveRentalRequest command)
+            [FromBody] DisapproveRentalRequest request)
         {
-            var response = handler.Handle(command);
+            var response = handler.Handle(request);
             if (!response.Success)
                 return new BadRequestObjectResult(response.Messages);
             return new OkObjectResult(response.Data);

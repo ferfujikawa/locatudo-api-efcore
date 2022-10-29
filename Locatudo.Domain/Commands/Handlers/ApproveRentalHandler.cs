@@ -17,16 +17,16 @@ namespace Locatudo.Domain.Commands.Handlers
             _employeeRepository = employeeRepository;
         }
 
-        public ICommandResponse<ApproveRentalData> Handle(ApproveRentalRequest command)
+        public ICommandResponse<ApproveRentalData> Handle(ApproveRentalRequest request)
         {
-            if (!command.Validate())
-                return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, command.Notifications);
+            if (!request.Validate())
+                return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, request.Notifications);
 
-            var appraiser = _employeeRepository.GetById(command.AppraiserId);
+            var appraiser = _employeeRepository.GetById(request.AppraiserId);
             if (appraiser == null)
                 return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, "AppraiserId", "Funcionário não encontrado");
 
-            var rental = _rentalRepository.GetByIdIncludingEquipment(command.RentalId);
+            var rental = _rentalRepository.GetByIdIncludingEquipment(request.RentalId);
             if (rental == null)
                 return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, "RentalId", "Locação não encontrada.");
 

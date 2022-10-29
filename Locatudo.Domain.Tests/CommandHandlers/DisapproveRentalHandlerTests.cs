@@ -16,7 +16,7 @@ namespace Locatudo.Domain.Tests.CommandHandlers
     public class DisapproveRentalHandlerTests
     {
         [Theory, AutoMoq]
-        public void Command_Valid_DisapproveRental(
+        public void Request_Valid_DisapproveRental(
             IFixture fixture,
             [Frozen] Mock<IRentalRepository> rentalRepository,
             [Frozen] Mock<IEmployeeRepository> employeeRepository)
@@ -42,31 +42,31 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
             rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns(rental);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalRequest(rental.Id, appraiser.Id);
+            var request = new DisapproveRentalRequest(rental.Id, appraiser.Id);
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
             result.Data
                 .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
                 .And.BeOfType<DisapproveRentalData>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
-                .Which.Should().Match<DisapproveRentalData>(x => x.AppraiserId.Equals(command.AppraiserId) && x.Status.Equals(ERentalStatus.Disapproved.ToString()), "Ao reprovar a locação, a situação deve ser alterada para Disapproved e EquipmentId do aprovador da locação precisa ser o mesmo passado no comando");
+                .Which.Should().Match<DisapproveRentalData>(x => x.AppraiserId.Equals(request.AppraiserId) && x.Status.Equals(ERentalStatus.Disapproved.ToString()), "Ao reprovar a locação, a situação deve ser alterada para Disapproved e EquipmentId do aprovador da locação precisa ser o mesmo passado no comando");
         }
 
         [Theory, AutoMoq]
-        public void Command_Invalid_GenerateNotification(IFixture fixture)
+        public void Request_Invalid_GenerateNotification(IFixture fixture)
         {
             ////Arrange
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalRequest();
+            var request = new DisapproveRentalRequest();
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -87,12 +87,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
             rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns((Rental?)null);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalRequest(Guid.NewGuid(), appraiser.Id);
+            var request = new DisapproveRentalRequest(Guid.NewGuid(), appraiser.Id);
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -117,12 +117,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((Employee?)null);
             rentalRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(rental);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
+            var request = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -158,12 +158,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
             rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns(rental);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
+            var request = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -200,12 +200,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
             rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns(rental);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
+            var request = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");

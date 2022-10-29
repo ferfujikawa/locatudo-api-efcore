@@ -5,10 +5,10 @@ namespace Locatudo.Domain.Commands.Contracts
 {
     public class CancelRentalContract : Contract<CancelRentalRequest>
     {
-        public CancelRentalContract(CancelRentalRequest command)
+        public CancelRentalContract(CancelRentalRequest request)
         {
             Requires()
-                .AreNotEquals(command.RentalId, default, "RentalId", "É necessário informar o Id da locação que se pretende cancelar");
+                .AreNotEquals(request.RentalId, default, "RentalId", "É necessário informar o Id da locação que se pretende cancelar");
         }
     }
 }

@@ -5,10 +5,10 @@ namespace Locatudo.Domain.Queries.Contracts
 {
     public class GetRentalByIdContract : Contract<GetRentalByIdRequest>
     {
-        public GetRentalByIdContract(GetRentalByIdRequest command)
+        public GetRentalByIdContract(GetRentalByIdRequest request)
         {
             Requires()
-                .AreNotEquals(command.Id, default, "Id", "É necessário informar o Id da locação que se pretende obter");
+                .AreNotEquals(request.Id, default, "Id", "É necessário informar o Id da locação que se pretende obter");
         }
     }
 }

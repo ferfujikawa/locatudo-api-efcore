@@ -16,7 +16,7 @@ namespace Locatudo.Domain.Tests.CommandHandlers
     public class CancelRentalHandlerTests
     {
         [Theory, AutoMoq]
-        public void Command_Valid_CancelRental(
+        public void Request_Valid_CancelRental(
             IFixture fixture,
             [Frozen] Mock<IRentalRepository> rentalRepository)
         {
@@ -30,12 +30,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             //Setup de retornos de métodos dos repositórios
             rentalRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(rental);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<CancelRentalHandler>();
-            var command = new CancelRentalRequest(rental.Id);
+            var request = new CancelRentalRequest(rental.Id);
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
@@ -46,15 +46,15 @@ namespace Locatudo.Domain.Tests.CommandHandlers
         }
 
         [Theory, AutoMoq]
-        public void Command_Invalid_GenerateNotification(IFixture fixture)
+        public void Request_Invalid_GenerateNotification(IFixture fixture)
         {
             ////Arrange
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<CancelRentalHandler>();
-            var command = new CancelRentalRequest();
+            var request = new CancelRentalRequest();
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -71,12 +71,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             //Setup de retornos de métodos dos repositórios
             rentalRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((Rental?)null);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<CancelRentalHandler>();
-            var command = new CancelRentalRequest(Guid.NewGuid());
+            var request = new CancelRentalRequest(Guid.NewGuid());
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -113,12 +113,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
             rentalRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(rental);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<CancelRentalHandler>();
-            var command = new CancelRentalRequest(rental.Id);
+            var request = new CancelRentalRequest(rental.Id);
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");

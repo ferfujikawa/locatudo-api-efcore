@@ -28,8 +28,8 @@ namespace Locatudo.Api.Controllers
             [FromServices] DeleteOutsourcedHandler deleteOutsourcedHandler,
             [FromRoute] Guid id)
         {
-            var command = new DeleteOutsourcedRequest(id);
-            var response = deleteOutsourcedHandler.Handle(command);
+            var request = new DeleteOutsourcedRequest(id);
+            var response = deleteOutsourcedHandler.Handle(request);
 
             if (!response.Success)
                 return new NotFoundObjectResult(response.Messages);

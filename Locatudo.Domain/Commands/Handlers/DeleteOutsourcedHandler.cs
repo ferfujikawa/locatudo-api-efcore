@@ -15,12 +15,12 @@ namespace Locatudo.Domain.Commands.Handlers
             _outsourcedRepository = outsourcedRepository;
         }
 
-        public ICommandResponse<DeleteOutsourcedData> Handle(DeleteOutsourcedRequest command)
+        public ICommandResponse<DeleteOutsourcedData> Handle(DeleteOutsourcedRequest request)
         {
-            if (!command.Validate())
-                return new GenericCommandHandlerResponse<DeleteOutsourcedData>(false, null, command.Notifications);
+            if (!request.Validate())
+                return new GenericCommandHandlerResponse<DeleteOutsourcedData>(false, null, request.Notifications);
 
-            var outsourced = _outsourcedRepository.GetById(command.Id);
+            var outsourced = _outsourcedRepository.GetById(request.Id);
             if (outsourced == null)
                 return new GenericCommandHandlerResponse<DeleteOutsourcedData>(false, null, "Id", "Terceirizado não encontrado");
 

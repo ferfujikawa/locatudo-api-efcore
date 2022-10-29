@@ -6,10 +6,10 @@ namespace Locatudo.Domain.Commands.Contracts
 {
     public class CreateEquipmentContract : Contract<CreateEquipmentRequest>
     {
-        public CreateEquipmentContract(CreateEquipmentRequest command)
+        public CreateEquipmentContract(CreateEquipmentRequest request)
         {
             Requires()
-                .HasMinLength(command.Name, 3, "Name", "O nome do equipamento precisa conter no mínimo 3 caracteres");
+                .HasMinLength(request.Name, 3, "Name", "O nome do equipamento precisa conter no mínimo 3 caracteres");
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Locatudo.Domain.Commands.Handlers
             _rentalRepository = rentalRepository;
         }
 
-        public ICommandResponse<CancelRentalData> Handle(CancelRentalRequest command)
+        public ICommandResponse<CancelRentalData> Handle(CancelRentalRequest request)
         {
-            if (!command.Validate())
-                return new GenericCommandHandlerResponse<CancelRentalData>(false, null, command.Notifications);
+            if (!request.Validate())
+                return new GenericCommandHandlerResponse<CancelRentalData>(false, null, request.Notifications);
 
-            var rental = _rentalRepository.GetById(command.RentalId);
+            var rental = _rentalRepository.GetById(request.RentalId);
             if (rental == null)
                 return new GenericCommandHandlerResponse<CancelRentalData>(false, null, "RentalId", "Locação não encontrada.");
 

@@ -21,21 +21,21 @@ namespace Locatudo.Domain.Commands.Handlers
             _rentalRepository = rentalRepository;
         }
 
-        public ICommandResponse<CreateRentalData> Handle(CreateRentalRequest command)
+        public ICommandResponse<CreateRentalData> Handle(CreateRentalRequest request)
         {
-            if (!command.Validate())
-                return new GenericCommandHandlerResponse<CreateRentalData>(false, null, command.Notifications);
+            if (!request.Validate())
+                return new GenericCommandHandlerResponse<CreateRentalData>(false, null, request.Notifications);
 
-            var equipment = _equipmentRepository.GetById(command.EquipmentId);
-            var rentalStart = new RentalTime(command.Start);
+            var equipment = _equipmentRepository.GetById(request.EquipmentId);
+            var rentalStart = new RentalTime(request.Start);
             if (equipment == null)
                 return new GenericCommandHandlerResponse<CreateRentalData>(false, null, "EquipmentId", "Equipamento não encontrado");
 
-            var tenant = _userRepository.GetById(command.TenantId);
+            var tenant = _userRepository.GetById(request.TenantId);
             if (tenant == null)
                 return new GenericCommandHandlerResponse<CreateRentalData>(false, null, "TenantId", "Usuário não encontrado");
 
-            if (!_rentalRepository.CheckAvailability(command.EquipmentId, rentalStart))
+            if (!_rentalRepository.CheckAvailability(request.EquipmentId, rentalStart))
                 return new GenericCommandHandlerResponse<CreateRentalData>(false, null, "Start", "Horário de locação indisponível");
 
             var rental = new Rental(equipment, tenant, rentalStart);

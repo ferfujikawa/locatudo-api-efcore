@@ -25,9 +25,9 @@ namespace Locatudo.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Create(
             [FromServices] CreateEquipmentHandler handler,
-            [FromBody] CreateEquipmentRequest command)
+            [FromBody] CreateEquipmentRequest request)
         {
-            var response = handler.Handle(command);
+            var response = handler.Handle(request);
             if (!response.Success)
                 return new BadRequestObjectResult(response.Messages);
             return new CreatedResult("", response.Data);
@@ -39,9 +39,9 @@ namespace Locatudo.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult ChangeManager(
             [FromServices] ChangeEquipmentManagerHandler handler,
-            [FromBody] ChangeEquipmentManagerRequest command)
+            [FromBody] ChangeEquipmentManagerRequest request)
         {
-            var response = handler.Handle(command);
+            var response = handler.Handle(request);
             if (!response.Success)
                 return new BadRequestObjectResult(response.Messages);
             return new OkObjectResult(response.Data);

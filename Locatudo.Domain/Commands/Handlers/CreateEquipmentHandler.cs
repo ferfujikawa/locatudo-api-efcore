@@ -16,12 +16,12 @@ namespace Locatudo.Domain.Commands.Handlers
             _equipmentRepository = equipmentRepository;
         }
 
-        public ICommandResponse<CreateEquipment> Handle(CreateEquipmentRequest command)
+        public ICommandResponse<CreateEquipment> Handle(CreateEquipmentRequest request)
         {
-            if (!command.Validate())
-                return new GenericCommandHandlerResponse<CreateEquipment>(false, null, command.Notifications);
+            if (!request.Validate())
+                return new GenericCommandHandlerResponse<CreateEquipment>(false, null, request.Notifications);
 
-            var equipment = new Equipment(command.Name);
+            var equipment = new Equipment(request.Name);
             _equipmentRepository.Create(equipment);
 
             return new GenericCommandHandlerResponse<CreateEquipment>(

@@ -24,7 +24,7 @@ namespace Locatudo.Domain.Tests.QueryHandlers
             //Setup de retornos de métodos dos repositórios
             rentalRepository.Setup(x => x.GetById<RentalResponse>(It.IsAny<Guid>())).Returns(rentalResponse);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<GetRentalByIdHandler>();
             var request = new GetRentalByIdRequest(rentalResponse.Id);
 
@@ -42,7 +42,7 @@ namespace Locatudo.Domain.Tests.QueryHandlers
         public void Request_Invalid_GenerateNotification(IFixture fixture)
         {
             ////Arrange
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<GetRentalByIdHandler>();
             var request = new GetRentalByIdRequest();
 
@@ -64,7 +64,7 @@ namespace Locatudo.Domain.Tests.QueryHandlers
             //Setup de retornos de métodos dos repositórios
             rentalRepository.Setup(x => x.GetById<RentalResponse>(It.IsAny<Guid>())).Returns((RentalResponse?)null);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<GetRentalByIdHandler>();
             var request = new GetRentalByIdRequest(Guid.NewGuid());
 

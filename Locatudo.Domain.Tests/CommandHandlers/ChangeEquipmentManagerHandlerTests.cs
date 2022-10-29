@@ -14,7 +14,7 @@ namespace Locatudo.Domain.Tests.CommandHandlers
     public class ChangeEquipmentManagerHandlerTests
     {
         [Theory, AutoMoq]
-        public void Command_Valid_ChangeEquipmentManagerHandler(
+        public void Request_Valid_ChangeEquipmentManagerHandler(
             IFixture fixture,
             [Frozen] Mock<IEquipmentRepository> equipmentRepository,
             [Frozen] Mock<IDepartmentRepository> departmentRepository)
@@ -28,12 +28,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             equipmentRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(equipment);
             departmentRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(department);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<ChangeEquipmentManagerHandler>();
-            var command = new ChangeEquipmentManagerRequest(equipment.Id, department.Id);
+            var request = new ChangeEquipmentManagerRequest(equipment.Id, department.Id);
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
@@ -44,15 +44,15 @@ namespace Locatudo.Domain.Tests.CommandHandlers
         }
 
         [Theory, AutoMoq]
-        public void Command_Invalid_GenerateNotification(IFixture fixture)
+        public void Request_Invalid_GenerateNotification(IFixture fixture)
         {
             ////Arrange
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<ChangeEquipmentManagerHandler>();
-            var command = new ChangeEquipmentManagerRequest();
+            var request = new ChangeEquipmentManagerRequest();
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -74,12 +74,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             equipmentRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((Equipment?)null);
             departmentRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(department);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<ChangeEquipmentManagerHandler>();
-            var command = new ChangeEquipmentManagerRequest(Guid.NewGuid(), department.Id);
+            var request = new ChangeEquipmentManagerRequest(Guid.NewGuid(), department.Id);
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
@@ -102,12 +102,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
             equipmentRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(equipment);
             departmentRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((Department?)null);
 
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<ChangeEquipmentManagerHandler>();
-            var command = new ChangeEquipmentManagerRequest(equipment.Id, Guid.NewGuid());
+            var request = new ChangeEquipmentManagerRequest(equipment.Id, Guid.NewGuid());
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");

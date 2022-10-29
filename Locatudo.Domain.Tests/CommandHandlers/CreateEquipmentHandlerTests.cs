@@ -10,33 +10,33 @@ namespace Locatudo.Domain.Tests.CommandHandlers
     public class CreateEquipmentHandlerTests
     {
         [Theory, AutoMoq]
-        public void Command_Valid_CreateEquipment(IFixture fixture)
+        public void Request_Valid_CreateEquipment(IFixture fixture)
         {
             //Arrange
             var handler = fixture.Create<CreateEquipmentHandler>();
-            var command = new CreateEquipmentRequest("Equipament teste 123");
+            var request = new CreateEquipmentRequest("Equipament teste 123");
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
             result.Data
                 .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
                 .And.BeOfType<CreateEquipment>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
-                .Which.Should().Match<CreateEquipment>(x => x.Name.Equals(command.Name), "O nome do novo equipamento deve ser igual ao que foi passado no command");
+                .Which.Should().Match<CreateEquipment>(x => x.Name.Equals(request.Name), "O nome do novo equipamento deve ser igual ao que foi passado no request");
         }
 
         [Theory, AutoMoq]
-        public void Command_Invalid_GenerateNotification(IFixture fixture)
+        public void Request_Invalid_GenerateNotification(IFixture fixture)
         {
             ////Arrange
-            //Mock de handler e instância de command
+            //Mock de handler e instância de request
             var handler = fixture.Create<CreateEquipmentHandler>();
-            var command = new CreateEquipmentRequest();
+            var request = new CreateEquipmentRequest();
 
             //Act
-            var result = handler.Handle(command);
+            var result = handler.Handle(request);
 
             //Assert
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");

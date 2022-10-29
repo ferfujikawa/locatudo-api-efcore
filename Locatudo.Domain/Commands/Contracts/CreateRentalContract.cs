@@ -5,14 +5,14 @@ namespace Locatudo.Domain.Commands.Contracts
 {
     public class CreateRentalContract : Contract<CreateRentalRequest>
     {
-        public CreateRentalContract(CreateRentalRequest command)
+        public CreateRentalContract(CreateRentalRequest request)
         {
-            var inicio = new DateTime(command.Start.Year, command.Start.Month, command.Start.Day, command.Start.Hour, 0, 0);
+            var inicio = new DateTime(request.Start.Year, request.Start.Month, request.Start.Day, request.Start.Hour, 0, 0);
 
             Requires()
-                .AreNotEquals(command.EquipmentId, default, "EquipmentId", "É necessário informar o Id do equipamento que está sendo locado")
-                .AreNotEquals(command.TenantId, default, "TenantId", "É necessário informar o Id da usuário que está locando o equipamento")
-                .AreNotEquals(command.Start, new DateTime(), "Start", "É necessário informar o horário de início da locação")
+                .AreNotEquals(request.EquipmentId, default, "EquipmentId", "É necessário informar o Id do equipamento que está sendo locado")
+                .AreNotEquals(request.TenantId, default, "TenantId", "É necessário informar o Id da usuário que está locando o equipamento")
+                .AreNotEquals(request.Start, new DateTime(), "Start", "É necessário informar o horário de início da locação")
                 .IsGreaterThan(inicio, DateTime.Now, "Start", "Início da locação não pode ser no passado");
         }
     }
