@@ -26,7 +26,7 @@ namespace Locatudo.Domain.Queries.Handlers
 
             return new GenericQueryHandlerResponse<RentalResponse>(
                 true,
-                (RentalResponse?)response,
+                response,
                 "Sucesso",
                 "Locação obtida");
         }
