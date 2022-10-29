@@ -3,11 +3,11 @@ using AutoFixture.Xunit2;
 using FluentAssertions;
 using Moq;
 using Locatudo.Domain.Entities;
-using Locatudo.Domain.Handlers.Commands.Outputs;
-using Locatudo.Domain.Handlers;
 using Locatudo.Domain.Repositories;
 using Locatudo.Domain.Tests.Customizations;
-using Locatudo.Domain.Handlers.Commands.Inputs;
+using Locatudo.Domain.Commands.Responses;
+using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Commands.Requests;
 
 namespace Locatudo.Domain.Tests.Handlers
 {
@@ -30,7 +30,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<ChangeEquipmentManagerHandler>();
-            var command = new ChangeEquipmentManagerCommand(equipment.Id, department.Id);
+            var command = new ChangeEquipmentManagerRequest(equipment.Id, department.Id);
 
             //Act
             var result = handler.Handle(command);
@@ -39,7 +39,7 @@ namespace Locatudo.Domain.Tests.Handlers
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
             result.Data
                 .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
-                .And.BeOfType<ChangeEquipmentManagerCommandResponse>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
+                .And.BeOfType<ChangeEquipmentManagerData>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
                 .Which.DepartmentId.Should().Be(department.Id, "O departamento gerenciador do equipamento precisa ser o mesmo cujo EquipmentId foi passado no comando");
         }
 
@@ -49,7 +49,7 @@ namespace Locatudo.Domain.Tests.Handlers
             ////Arrange
             //Mock de handler e instância de command
             var handler = fixture.Create<ChangeEquipmentManagerHandler>();
-            var command = new ChangeEquipmentManagerCommand();
+            var command = new ChangeEquipmentManagerRequest();
 
             //Act
             var result = handler.Handle(command);
@@ -76,7 +76,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<ChangeEquipmentManagerHandler>();
-            var command = new ChangeEquipmentManagerCommand(Guid.NewGuid(), department.Id);
+            var command = new ChangeEquipmentManagerRequest(Guid.NewGuid(), department.Id);
 
             //Act
             var result = handler.Handle(command);
@@ -104,7 +104,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<ChangeEquipmentManagerHandler>();
-            var command = new ChangeEquipmentManagerCommand(equipment.Id, Guid.NewGuid());
+            var command = new ChangeEquipmentManagerRequest(equipment.Id, Guid.NewGuid());
 
             //Act
             var result = handler.Handle(command);

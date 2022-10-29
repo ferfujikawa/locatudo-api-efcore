@@ -1,15 +1,15 @@
 ﻿using AutoFixture;
 using AutoFixture.Xunit2;
 using FluentAssertions;
-using Locatudo.Domain.Handlers.Commands.Inputs;
 using Locatudo.Domain.Tests.Customizations;
 using Moq;
 using Locatudo.Shared.Enumerators;
 using Locatudo.Shared.ValueObjects;
 using Locatudo.Domain.Entities;
-using Locatudo.Domain.Handlers.Commands.Outputs;
 using Locatudo.Domain.Repositories;
-using Locatudo.Domain.Handlers;
+using Locatudo.Domain.Commands.Responses;
+using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Commands.Requests;
 
 namespace Locatudo.Domain.Tests.Handlers
 {
@@ -34,7 +34,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Criação do mock do handler e command
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalCommand(equipment.Id, outsourced.Id, DateTime.Now.AddHours(1));
+            var command = new CreateRentalRequest(equipment.Id, outsourced.Id, DateTime.Now.AddHours(1));
 
             //Act
             var result = handler.Handle(command);
@@ -44,7 +44,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             result.Data
                 .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
-                .And.BeOfType<CreateRentalCommandResponse>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
+                .And.BeOfType<CreateRentalData>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
                 .Which.Status.Should().Be(ERentalStatus.Requested.ToString(), "A situação de uma nova locação deve ser Requested");
         }
 
@@ -54,7 +54,7 @@ namespace Locatudo.Domain.Tests.Handlers
             ////Arrange
             //Mock de handler e instância de command
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalCommand();
+            var command = new CreateRentalRequest();
 
             //Act
             var result = handler.Handle(command);
@@ -83,7 +83,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Criação do mock do handler e command
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalCommand(Guid.NewGuid(), outsourced.Id, DateTime.Now.AddHours(1));
+            var command = new CreateRentalRequest(Guid.NewGuid(), outsourced.Id, DateTime.Now.AddHours(1));
 
             //Act
             var result = handler.Handle(command);
@@ -113,7 +113,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Criação do mock do handler e command
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalCommand(equipment.Id, Guid.NewGuid(), DateTime.Now.AddHours(1));
+            var command = new CreateRentalRequest(equipment.Id, Guid.NewGuid(), DateTime.Now.AddHours(1));
 
             //Act
             var result = handler.Handle(command);
@@ -144,7 +144,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Criação do mock do handler e command
             var handler = fixture.Create<CreateRentalHandler>();
-            var command = new CreateRentalCommand(equipment.Id, Guid.NewGuid(), DateTime.Now.AddHours(1));
+            var command = new CreateRentalRequest(equipment.Id, Guid.NewGuid(), DateTime.Now.AddHours(1));
 
             //Act
             var result = handler.Handle(command);

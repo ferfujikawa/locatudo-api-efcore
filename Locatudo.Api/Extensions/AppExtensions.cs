@@ -1,4 +1,5 @@
-﻿using Locatudo.Domain.Handlers;
+﻿using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Queries.Handlers;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
 using Locatudo.Infra.Repositories;
@@ -34,6 +35,7 @@ namespace Locatudo.Api.Extensions
             services.AddTransient<DisapproveRentalHandler>();
             services.AddTransient<ChangeEquipmentManagerHandler>();
             services.AddTransient<DeleteOutsourcedHandler>();
+            services.AddTransient<GetRentalByIdHandler>();
         }
     }
 }

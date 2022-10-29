@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Locatudo.Domain.Entities.Dtos;
+using Locatudo.Domain.Queries.Responses;
 
 namespace Locatudo.Domain.Entities.Profiles
 {
@@ -7,7 +7,7 @@ namespace Locatudo.Domain.Entities.Profiles
     {
         public RentalProfile()
         {
-            CreateMap<Rental, RentalDto>()
+            CreateMap<Rental, RentalResponse>()
                 .ForMember(
                     r => r.EquipmentId,
                     opt => opt.MapFrom(x => x.Equipment.Id))

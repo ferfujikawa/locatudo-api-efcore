@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Locatudo.Domain.Repositories;
 using Locatudo.Domain.Entities.Dtos;
-using Locatudo.Domain.Handlers.Commands.Outputs;
-using Locatudo.Domain.Handlers.Commands.Inputs;
-using Locatudo.Domain.Handlers;
+using Locatudo.Domain.Commands.Responses;
+using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Commands.Requests;
 
 namespace Locatudo.Api.Controllers
 {
@@ -22,13 +22,13 @@ namespace Locatudo.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteOutsourcedCommandResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteOutsourcedData))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(IEnumerable<string>))]
         public IActionResult Delete(
             [FromServices] DeleteOutsourcedHandler deleteOutsourcedHandler,
             [FromRoute] Guid id)
         {
-            var command = new DeleteOutsourcedCommand(id);
+            var command = new DeleteOutsourcedRequest(id);
             var response = deleteOutsourcedHandler.Handle(command);
 
             if (!response.Success)

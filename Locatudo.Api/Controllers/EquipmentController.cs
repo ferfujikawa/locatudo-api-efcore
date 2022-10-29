@@ -1,9 +1,9 @@
-﻿using Locatudo.Domain.Handlers.Commands.Inputs;
-using Locatudo.Domain.Handlers;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Locatudo.Domain.Repositories;
 using Locatudo.Domain.Entities.Dtos;
-using Locatudo.Domain.Handlers.Commands.Outputs;
+using Locatudo.Domain.Commands.Responses;
+using Locatudo.Domain.Commands.Requests;
+using Locatudo.Domain.Commands.Handlers;
 
 namespace Locatudo.Api.Controllers
 {
@@ -21,11 +21,11 @@ namespace Locatudo.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(IEnumerable<CreateEquipmentCommandResponse>))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(IEnumerable<CreateEquipment>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Create(
             [FromServices] CreateEquipmentHandler handler,
-            [FromBody] CreateEquipmentCommand command)
+            [FromBody] CreateEquipmentRequest command)
         {
             var response = handler.Handle(command);
             if (!response.Success)
@@ -35,11 +35,11 @@ namespace Locatudo.Api.Controllers
 
         [HttpPut]
         [Route("change_manager")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChangeEquipmentManagerCommandResponse>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChangeEquipmentManagerData>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult ChangeManager(
             [FromServices] ChangeEquipmentManagerHandler handler,
-            [FromBody] ChangeEquipmentManagerCommand command)
+            [FromBody] ChangeEquipmentManagerRequest command)
         {
             var response = handler.Handle(command);
             if (!response.Success)

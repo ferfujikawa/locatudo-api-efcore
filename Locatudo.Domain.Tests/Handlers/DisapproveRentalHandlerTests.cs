@@ -1,15 +1,15 @@
 ﻿using AutoFixture;
 using AutoFixture.Xunit2;
 using FluentAssertions;
-using Locatudo.Domain.Handlers.Commands.Inputs;
 using Locatudo.Domain.Tests.Customizations;
 using Moq;
 using Locatudo.Shared.Enumerators;
 using Locatudo.Shared.ValueObjects;
 using Locatudo.Domain.Entities;
-using Locatudo.Domain.Handlers.Commands.Outputs;
 using Locatudo.Domain.Repositories;
-using Locatudo.Domain.Handlers;
+using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Commands.Responses;
+using Locatudo.Domain.Commands.Requests;
 
 namespace Locatudo.Domain.Tests.Handlers
 {
@@ -44,7 +44,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalCommand(rental.Id, appraiser.Id);
+            var command = new DisapproveRentalRequest(rental.Id, appraiser.Id);
 
             //Act
             var result = handler.Handle(command);
@@ -53,8 +53,8 @@ namespace Locatudo.Domain.Tests.Handlers
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
             result.Data
                 .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
-                .And.BeOfType<DisapproveRentalCommandResponse>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
-                .Which.Should().Match<DisapproveRentalCommandResponse>(x => x.AppraiserId.Equals(command.AppraiserId) && x.Status.Equals(ERentalStatus.Disapproved.ToString()), "Ao reprovar a locação, a situação deve ser alterada para Disapproved e EquipmentId do aprovador da locação precisa ser o mesmo passado no comando");
+                .And.BeOfType<DisapproveRentalData>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
+                .Which.Should().Match<DisapproveRentalData>(x => x.AppraiserId.Equals(command.AppraiserId) && x.Status.Equals(ERentalStatus.Disapproved.ToString()), "Ao reprovar a locação, a situação deve ser alterada para Disapproved e EquipmentId do aprovador da locação precisa ser o mesmo passado no comando");
         }
 
         [Theory, AutoMoq]
@@ -63,7 +63,7 @@ namespace Locatudo.Domain.Tests.Handlers
             ////Arrange
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalCommand();
+            var command = new DisapproveRentalRequest();
 
             //Act
             var result = handler.Handle(command);
@@ -89,7 +89,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalCommand(Guid.NewGuid(), appraiser.Id);
+            var command = new DisapproveRentalRequest(Guid.NewGuid(), appraiser.Id);
 
             //Act
             var result = handler.Handle(command);
@@ -119,7 +119,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalCommand(rental.Id, Guid.NewGuid());
+            var command = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
 
             //Act
             var result = handler.Handle(command);
@@ -160,7 +160,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalCommand(rental.Id, Guid.NewGuid());
+            var command = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
 
             //Act
             var result = handler.Handle(command);
@@ -202,7 +202,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<DisapproveRentalHandler>();
-            var command = new DisapproveRentalCommand(rental.Id, Guid.NewGuid());
+            var command = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
 
             //Act
             var result = handler.Handle(command);

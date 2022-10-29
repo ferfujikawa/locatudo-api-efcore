@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Locatudo.Domain.Repositories;
-using Locatudo.Domain.Handlers;
-using Locatudo.Domain.Handlers.Commands.Inputs;
-using Locatudo.Domain.Entities.Dtos;
-using Locatudo.Domain.Handlers.Commands.Outputs;
+using Locatudo.Domain.Queries.Handlers;
+using Locatudo.Domain.Queries.Responses;
+using Locatudo.Domain.Commands.Responses;
+using Locatudo.Domain.Commands.Requests;
+using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Queries.Requests;
 
 namespace Locatudo.Api.Controllers
 {
@@ -13,33 +15,34 @@ namespace Locatudo.Api.Controllers
     public class RentalController : Controller
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RentalDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RentalResponse>))]
         public IActionResult List([FromServices] IRentalRepository rentalRepository)
         {
-            var rentals = rentalRepository.List<RentalDto>();
+            var rentals = rentalRepository.List<RentalResponse>();
             return new OkObjectResult(rentals);
         }
 
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RentalDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RentalResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetById(
-            [FromServices] IRentalRepository rentalRepository,
+            [FromServices] GetRentalByIdHandler handler,
             [FromRoute] Guid id)
         {
-            var rental = rentalRepository.GetById<RentalDto>(id);
-            if (rental == null)
+            var command = new GetRentalByIdRequest(id);
+            var response = handler.Handle(command);
+            if (!response.Success)
                 return new NotFoundResult();
-            return new OkObjectResult(rental);
+            return new OkObjectResult(response.Data);
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateRentalCommandResponse))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateRentalData))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Create(
             [FromServices] CreateRentalHandler handler,
-            [FromBody] CreateRentalCommand command)
+            [FromBody] CreateRentalRequest command)
         {
             var response = handler.Handle(command);
             if (!response.Success)
@@ -49,11 +52,11 @@ namespace Locatudo.Api.Controllers
 
         [HttpPut]
         [Route("approve")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApproveRentalCommandResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApproveRentalData))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Approve(
             [FromServices] ApproveRentalHandler handler,
-            [FromBody] ApproveRentalCommand command)
+            [FromBody] ApproveRentalRequest command)
         {
             var response = handler.Handle(command);
             if (!response.Success)
@@ -63,11 +66,11 @@ namespace Locatudo.Api.Controllers
 
         [HttpPut]
         [Route("cancel")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CancelRentalCommandResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CancelRentalData))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Cancel(
             [FromServices] CancelRentalHandler handler,
-            [FromBody] CancelRentalCommand command)
+            [FromBody] CancelRentalRequest command)
         {
             var response = handler.Handle(command);
             if (!response.Success)
@@ -77,11 +80,11 @@ namespace Locatudo.Api.Controllers
 
         [HttpPut]
         [Route("disapprove")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CancelRentalCommandResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CancelRentalData))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IReadOnlyCollection<string>))]
         public IActionResult Disapprove(
             [FromServices] DisapproveRentalHandler handler,
-            [FromBody] DisapproveRentalCommand command)
+            [FromBody] DisapproveRentalRequest command)
         {
             var response = handler.Handle(command);
             if (!response.Success)

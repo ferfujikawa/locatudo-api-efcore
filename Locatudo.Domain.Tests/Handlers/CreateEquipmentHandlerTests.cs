@@ -1,9 +1,9 @@
 ﻿using Locatudo.Domain.Tests.Customizations;
 using FluentAssertions;
 using AutoFixture;
-using Locatudo.Domain.Handlers.Commands.Inputs;
-using Locatudo.Domain.Handlers.Commands.Outputs;
-using Locatudo.Domain.Handlers;
+using Locatudo.Domain.Commands.Responses;
+using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Commands.Requests;
 
 namespace Locatudo.Domain.Tests.Handlers
 {
@@ -14,7 +14,7 @@ namespace Locatudo.Domain.Tests.Handlers
         {
             //Arrange
             var handler = fixture.Create<CreateEquipmentHandler>();
-            var command = new CreateEquipmentCommand("Equipament teste 123");
+            var command = new CreateEquipmentRequest("Equipament teste 123");
 
             //Act
             var result = handler.Handle(command);
@@ -23,8 +23,8 @@ namespace Locatudo.Domain.Tests.Handlers
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
             result.Data
                 .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
-                .And.BeOfType<CreateEquipmentCommandResponse>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
-                .Which.Should().Match<CreateEquipmentCommandResponse>(x => x.Name.Equals(command.Name), "O nome do novo equipamento deve ser igual ao que foi passado no command");
+                .And.BeOfType<CreateEquipment>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
+                .Which.Should().Match<CreateEquipment>(x => x.Name.Equals(command.Name), "O nome do novo equipamento deve ser igual ao que foi passado no command");
         }
 
         [Theory, AutoMoq]
@@ -33,7 +33,7 @@ namespace Locatudo.Domain.Tests.Handlers
             ////Arrange
             //Mock de handler e instância de command
             var handler = fixture.Create<CreateEquipmentHandler>();
-            var command = new CreateEquipmentCommand();
+            var command = new CreateEquipmentRequest();
 
             //Act
             var result = handler.Handle(command);

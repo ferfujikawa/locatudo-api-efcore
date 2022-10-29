@@ -1,15 +1,15 @@
 ﻿using AutoFixture;
 using AutoFixture.Xunit2;
 using FluentAssertions;
-using Locatudo.Domain.Handlers.Commands.Inputs;
 using Locatudo.Domain.Tests.Customizations;
 using Moq;
 using Locatudo.Shared.Enumerators;
 using Locatudo.Shared.ValueObjects;
 using Locatudo.Domain.Entities;
-using Locatudo.Domain.Handlers.Commands.Outputs;
 using Locatudo.Domain.Repositories;
-using Locatudo.Domain.Handlers;
+using Locatudo.Domain.Commands.Responses;
+using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Commands.Requests;
 
 namespace Locatudo.Domain.Tests.Handlers
 {
@@ -32,7 +32,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<CancelRentalHandler>();
-            var command = new CancelRentalCommand(rental.Id);
+            var command = new CancelRentalRequest(rental.Id);
 
             //Act
             var result = handler.Handle(command);
@@ -41,7 +41,7 @@ namespace Locatudo.Domain.Tests.Handlers
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
             result.Data
                 .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
-                .And.BeOfType<CancelRentalCommandResponse>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
+                .And.BeOfType<CancelRentalData>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
                 .Which.Status.Should().Be(ERentalStatus.Canceled.ToString(), "Após aprovar a locação, a mesma deve ter situação Approved");
         }
 
@@ -51,7 +51,7 @@ namespace Locatudo.Domain.Tests.Handlers
             ////Arrange
             //Mock de handler e instância de command
             var handler = fixture.Create<CancelRentalHandler>();
-            var command = new CancelRentalCommand();
+            var command = new CancelRentalRequest();
 
             //Act
             var result = handler.Handle(command);
@@ -73,7 +73,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<CancelRentalHandler>();
-            var command = new CancelRentalCommand(Guid.NewGuid());
+            var command = new CancelRentalRequest(Guid.NewGuid());
 
             //Act
             var result = handler.Handle(command);
@@ -115,7 +115,7 @@ namespace Locatudo.Domain.Tests.Handlers
 
             //Mock de handler e instância de command
             var handler = fixture.Create<CancelRentalHandler>();
-            var command = new CancelRentalCommand(rental.Id);
+            var command = new CancelRentalRequest(rental.Id);
 
             //Act
             var result = handler.Handle(command);
