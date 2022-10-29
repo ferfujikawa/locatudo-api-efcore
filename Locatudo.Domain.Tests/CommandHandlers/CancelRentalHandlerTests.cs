@@ -11,7 +11,7 @@ using Locatudo.Domain.Commands.Responses;
 using Locatudo.Domain.Commands.Handlers;
 using Locatudo.Domain.Commands.Requests;
 
-namespace Locatudo.Domain.Tests.Handlers
+namespace Locatudo.Domain.Tests.CommandHandlers
 {
     public class CancelRentalHandlerTests
     {

@@ -1,22 +1,22 @@
 ﻿using AutoFixture;
-using Moq;
-using FluentAssertions;
 using AutoFixture.Xunit2;
+using FluentAssertions;
+using Locatudo.Domain.Tests.Customizations;
+using Moq;
 using Locatudo.Shared.Enumerators;
 using Locatudo.Shared.ValueObjects;
 using Locatudo.Domain.Entities;
 using Locatudo.Domain.Repositories;
-using Locatudo.Domain.Tests.Customizations;
-using Locatudo.Domain.Commands.Responses;
 using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Commands.Responses;
 using Locatudo.Domain.Commands.Requests;
 
-namespace Locatudo.Domain.Tests.Handlers
+namespace Locatudo.Domain.Tests.CommandHandlers
 {
-    public class ApproveRentalHandlerTests
+    public class DisapproveRentalHandlerTests
     {
         [Theory, AutoMoq]
-        public void Command_Valid_ApproveRental(
+        public void Command_Valid_DisapproveRental(
             IFixture fixture,
             [Frozen] Mock<IRentalRepository> rentalRepository,
             [Frozen] Mock<IEmployeeRepository> employeeRepository)
@@ -25,12 +25,12 @@ namespace Locatudo.Domain.Tests.Handlers
             //Resolução de dependência de classe abstrata User
             fixture.Inject<User>(fixture.Create<Employee>());
 
-            //Criação de mocks
+            //Criação de Mocks
             var department = fixture.Create<Department>();
             var appraiser = fixture.Create<Employee>();
             var equipment = fixture.Create<Equipment>();
 
-            //Alteração de propriedades de mocks
+            //Alteração de propriedades dos mocks
             appraiser.ChangeDepartament(department);
             equipment.ChangeManager(department);
 
@@ -43,8 +43,8 @@ namespace Locatudo.Domain.Tests.Handlers
             rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns(rental);
 
             //Mock de handler e instância de command
-            var handler = fixture.Create<ApproveRentalHandler>();
-            var command = new ApproveRentalRequest(rental.Id, appraiser.Id);
+            var handler = fixture.Create<DisapproveRentalHandler>();
+            var command = new DisapproveRentalRequest(rental.Id, appraiser.Id);
 
             //Act
             var result = handler.Handle(command);
@@ -53,8 +53,8 @@ namespace Locatudo.Domain.Tests.Handlers
             result.Success.Should().BeTrue("Resultados com sucesso devem ter o valor da propriedade Sucesso igual a verdadeiro");
             result.Data
                 .Should().NotBeNull("Resultados com sucesso devem ter valor não nulo na propridade Data")
-                .And.BeOfType<ApproveRentalData>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
-                .Which.Should().Match<ApproveRentalData>(x => x.AppraiserId.Equals(command.AppraiserId) && x.Status.Equals(ERentalStatus.Approved.ToString()), "Ao aprovar a locação, a situação deve ser alterada para Approved e EquipmentId do aprovador da locação precisa ser o mesmo passado no comando");
+                .And.BeOfType<DisapproveRentalData>("Resultados com sucesso devem ter a propriedade Data de um tipo específico")
+                .Which.Should().Match<DisapproveRentalData>(x => x.AppraiserId.Equals(command.AppraiserId) && x.Status.Equals(ERentalStatus.Disapproved.ToString()), "Ao reprovar a locação, a situação deve ser alterada para Disapproved e EquipmentId do aprovador da locação precisa ser o mesmo passado no comando");
         }
 
         [Theory, AutoMoq]
@@ -62,8 +62,8 @@ namespace Locatudo.Domain.Tests.Handlers
         {
             ////Arrange
             //Mock de handler e instância de command
-            var handler = fixture.Create<ApproveRentalHandler>();
-            var command = new ApproveRentalRequest();
+            var handler = fixture.Create<DisapproveRentalHandler>();
+            var command = new DisapproveRentalRequest();
 
             //Act
             var result = handler.Handle(command);
@@ -75,8 +75,7 @@ namespace Locatudo.Domain.Tests.Handlers
         }
 
         [Theory, AutoMoq]
-        public void Rental_Invalid_GenerateNotification(
-            IFixture fixture,
+        public void Rental_Invalid_GenerateNotification(IFixture fixture,
             [Frozen] Mock<IRentalRepository> rentalRepository,
             [Frozen] Mock<IEmployeeRepository> employeeRepository)
         {
@@ -89,8 +88,8 @@ namespace Locatudo.Domain.Tests.Handlers
             rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns((Rental?)null);
 
             //Mock de handler e instância de command
-            var handler = fixture.Create<ApproveRentalHandler>();
-            var command = new ApproveRentalRequest(Guid.NewGuid(), appraiser.Id);
+            var handler = fixture.Create<DisapproveRentalHandler>();
+            var command = new DisapproveRentalRequest(Guid.NewGuid(), appraiser.Id);
 
             //Act
             var result = handler.Handle(command);
@@ -103,8 +102,7 @@ namespace Locatudo.Domain.Tests.Handlers
         }
 
         [Theory, AutoMoq]
-        public void Appraiser_Invalid_GenrateNotification(
-            IFixture fixture,
+        public void Appraiser_Invalid_GenerateNotification(IFixture fixture,
             [Frozen] Mock<IRentalRepository> rentalRepository,
             [Frozen] Mock<IEmployeeRepository> employeeRepository)
         {
@@ -120,8 +118,8 @@ namespace Locatudo.Domain.Tests.Handlers
             rentalRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(rental);
 
             //Mock de handler e instância de command
-            var handler = fixture.Create<ApproveRentalHandler>();
-            var command = new ApproveRentalRequest(rental.Id, Guid.NewGuid());
+            var handler = fixture.Create<DisapproveRentalHandler>();
+            var command = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
 
             //Act
             var result = handler.Handle(command);
@@ -130,7 +128,7 @@ namespace Locatudo.Domain.Tests.Handlers
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
             result.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
             result.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
-                .And.Contain("Funcionário não encontrado", "Quando informado o EquipmentId de um funcionário inexistente, o resultado deve conter uma notificação específica");
+                .And.Contain("Funcionário não encontrado.", "Quando informado o EquipmentId de um funcionário inexistente, o resultado deve conter uma notificação específica");
         }
 
         [Theory, AutoMoq]
@@ -161,8 +159,8 @@ namespace Locatudo.Domain.Tests.Handlers
             rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns(rental);
 
             //Mock de handler e instância de command
-            var handler = fixture.Create<ApproveRentalHandler>();
-            var command = new ApproveRentalRequest(rental.Id, Guid.NewGuid());
+            var handler = fixture.Create<DisapproveRentalHandler>();
+            var command = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
 
             //Act
             var result = handler.Handle(command);
@@ -175,7 +173,7 @@ namespace Locatudo.Domain.Tests.Handlers
         }
 
         [Theory, AutoMoq]
-        public void CurrentStatus_DoNotAcceptApproval_GenerateNotification(
+        public void CurrentStatus_DoNotAllowRepproval_Generateotification(
             IFixture fixture,
             [Frozen] Mock<IRentalRepository> rentalRepository,
             [Frozen] Mock<IEmployeeRepository> employeeRepository)
@@ -196,15 +194,15 @@ namespace Locatudo.Domain.Tests.Handlers
             //Criação do mock de Rental
             fixture.Customize<Rental>(x => x.FromFactory(() => new Rental(equipment, fixture.Create<Outsourced>(), fixture.Create<RentalTime>())));
             var rental = fixture.Create<Rental>();
-            rental.Cancel();
+            rental.Approve(appraiser);
 
             //Setup de retornos de métodos dos repositórios
             employeeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(appraiser);
             rentalRepository.Setup(x => x.GetByIdIncludingEquipment(It.IsAny<Guid>())).Returns(rental);
 
             //Mock de handler e instância de command
-            var handler = fixture.Create<ApproveRentalHandler>();
-            var command = new ApproveRentalRequest(rental.Id, Guid.NewGuid());
+            var handler = fixture.Create<DisapproveRentalHandler>();
+            var command = new DisapproveRentalRequest(rental.Id, Guid.NewGuid());
 
             //Act
             var result = handler.Handle(command);
@@ -213,7 +211,7 @@ namespace Locatudo.Domain.Tests.Handlers
             result.Success.Should().BeFalse("Resultados com falha devem ter o valor da propriedade Sucesso igual a falso");
             result.Data.Should().BeNull("Resultados com falha devem ter valor nulo na propridade Data");
             result.Messages.Should().NotBeEmpty("Resultados com falha devem ter alguma mensagem de notificação")
-                .And.Contain("A situação atual da locação não permite aprovação.", "Locações canceladas não podem ser aprovadas");
+                .And.Contain("A situação atual da locação não permite reprovação.", "Locações aprovadas não podem ser reprovadas");
         }
     }
 }
