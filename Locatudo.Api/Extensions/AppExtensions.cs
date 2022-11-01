@@ -42,6 +42,7 @@ namespace Locatudo.Api.Extensions
         public static void InjectValidators(this IServiceCollection services)
         {
             services.AddScoped<ApproveRentalValidator>();
+            services.AddScoped<CancelRentalValidator>();
         }
     }
 }

@@ -24,17 +24,16 @@ namespace Locatudo.Domain.Commands.Handlers
 
             var equipment = _equipmentRepository.GetById(request.EquipmentId);
             if (equipment == null)
-                return new GenericCommandHandlerResponse<ChangeEquipmentManagerData>(false, null, "EquipmentId", "Equipamento não encontrado");
+                return new GenericCommandHandlerResponse<ChangeEquipmentManagerData>("EquipmentId", "Equipamento não encontrado");
 
             var departamento = _departmentRepository.GetById(request.DepartmentId);
             if (departamento == null)
-                return new GenericCommandHandlerResponse<ChangeEquipmentManagerData>(false, null, "DepartmentId", "Departamento não encontrado");
+                return new GenericCommandHandlerResponse<ChangeEquipmentManagerData>("DepartmentId", "Departamento não encontrado");
 
             equipment.ChangeManager(departamento);
             _equipmentRepository.Update(equipment);
 
             return new GenericCommandHandlerResponse<ChangeEquipmentManagerData>(
-                true,
                 new ChangeEquipmentManagerData(equipment.Id, equipment.Name, departamento.Id, departamento.Name),
                 "Sucesso",
                 "Departamento gerenciador do equipamento alterado");

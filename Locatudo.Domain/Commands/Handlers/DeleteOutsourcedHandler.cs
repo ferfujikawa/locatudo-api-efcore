@@ -22,12 +22,11 @@ namespace Locatudo.Domain.Commands.Handlers
 
             var outsourced = _outsourcedRepository.GetById(request.Id);
             if (outsourced == null)
-                return new GenericCommandHandlerResponse<DeleteOutsourcedData>(false, null, "Id", "Terceirizado não encontrado");
+                return new GenericCommandHandlerResponse<DeleteOutsourcedData>("Id", "Terceirizado não encontrado");
 
             _outsourcedRepository.Delete(outsourced);
 
             return new GenericCommandHandlerResponse<DeleteOutsourcedData>(
-                true,
                 new DeleteOutsourcedData(),
                 "Sucesso",
                 "Terceirizado excluído");

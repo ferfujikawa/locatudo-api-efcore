@@ -18,16 +18,21 @@ namespace Locatudo.Shared.Commands.Responses
             _messages = messages;
         }
 
-        public GenericCommandHandlerResponse(bool success, T? data, IEnumerable<ValidationFailure> validationFailures)
+        public GenericCommandHandlerResponse(IEnumerable<ValidationFailure> validationFailures)
         {
-            Success = success;
-            Data = data;
+            Success = false;
             _messages = validationFailures.Select(x => new Notification(x.PropertyName, x.ErrorMessage));
         }
 
-        public GenericCommandHandlerResponse(bool success, T? data, string? messageKey, string? message)
+        public GenericCommandHandlerResponse(string? errorKey, string? errorMessage)
         {
-            Success = success;
+            Success = false;
+            _messages = new List<Notification>() { new Notification(errorKey, errorMessage) };
+        }
+
+        public GenericCommandHandlerResponse(T? data, string? messageKey, string? message)
+        {
+            Success = true;
             Data = data;
             _messages = new List<Notification>() { new Notification(messageKey, message) };
         }

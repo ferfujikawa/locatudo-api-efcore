@@ -24,22 +24,21 @@ namespace Locatudo.Domain.Commands.Handlers
 
             var appraiser = _employeeRepository.GetById(request.AppraiserId);
             if (appraiser == null)
-                return new GenericCommandHandlerResponse<DisapproveRentalData>(false, null, "AppraiserId", "Funcionário não encontrado.");
+                return new GenericCommandHandlerResponse<DisapproveRentalData>("AppraiserId", "Funcionário não encontrado.");
 
             var rental = _rentalRepository.GetByIdIncludingEquipment(request.RentalId);
             if (rental == null)
-                return new GenericCommandHandlerResponse<DisapproveRentalData>(false, null, "RentalId", "Locação não encontrada.");
+                return new GenericCommandHandlerResponse<DisapproveRentalData>("RentalId", "Locação não encontrada.");
 
             if (!rental.CanBeEvaluatedBy(appraiser))
-                return new GenericCommandHandlerResponse<DisapproveRentalData>(false, null, "AppraiserId", "Aprovador não está lotado no departamento gerenciador do equipamento.");
+                return new GenericCommandHandlerResponse<DisapproveRentalData>("AppraiserId", "Aprovador não está lotado no departamento gerenciador do equipamento.");
 
             if (!rental.Disapprove(appraiser))
-                return new GenericCommandHandlerResponse<DisapproveRentalData>(false, null, "Status", "A situação atual da locação não permite reprovação.");
+                return new GenericCommandHandlerResponse<DisapproveRentalData>("Status", "A situação atual da locação não permite reprovação.");
 
             _rentalRepository.Update(rental);
 
             return new GenericCommandHandlerResponse<DisapproveRentalData>(
-                true,
                 new DisapproveRentalData(rental.Id, appraiser.Id, appraiser.Name.ToString(), rental.Status.Value.ToString()),
                 "Sucesso",
                 "Locação reprovada.");

@@ -27,26 +27,25 @@ namespace Locatudo.Domain.Commands.Handlers
         {
             var validationResult = _validator.Validate(request);
             if (!validationResult.IsValid)
-                return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, validationResult.Errors);
+                return new GenericCommandHandlerResponse<ApproveRentalData>(validationResult.Errors);
 
             var appraiser = _employeeRepository.GetById(request.AppraiserId);
             if (appraiser == null)
-                return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, "AppraiserId", "Funcionário não encontrado");
+                return new GenericCommandHandlerResponse<ApproveRentalData>("AppraiserId", "Funcionário não encontrado");
 
             var rental = _rentalRepository.GetByIdIncludingEquipment(request.RentalId);
             if (rental == null)
-                return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, "RentalId", "Locação não encontrada.");
+                return new GenericCommandHandlerResponse<ApproveRentalData>("RentalId", "Locação não encontrada.");
 
             if (rental.CanBeEvaluatedBy(appraiser) == false)
-                return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, "AppraiserId", "Aprovador não está lotado no departamento gerenciador do equipamento.");
+                return new GenericCommandHandlerResponse<ApproveRentalData>("AppraiserId", "Aprovador não está lotado no departamento gerenciador do equipamento.");
 
             if (rental.Approve(appraiser) == false)
-                return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, "Status", "A situação atual da locação não permite aprovação.");
+                return new GenericCommandHandlerResponse<ApproveRentalData>("Status", "A situação atual da locação não permite aprovação.");
 
             _rentalRepository.Update(rental);
 
             return new GenericCommandHandlerResponse<ApproveRentalData>(
-                true,
                 new ApproveRentalData(rental.Id, appraiser.Id, appraiser.Name.ToString(), rental.Status.Value.ToString()),
                 "Sucesso",
                 "Locação aprovada");

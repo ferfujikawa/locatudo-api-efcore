@@ -25,7 +25,6 @@ namespace Locatudo.Domain.Commands.Handlers
             _equipmentRepository.Create(equipment);
 
             return new GenericCommandHandlerResponse<CreateEquipment>(
-                true,
                 new CreateEquipment(equipment.Id, equipment.Name),
                 "Sucesso",
                 "Equipament cadastrado");
