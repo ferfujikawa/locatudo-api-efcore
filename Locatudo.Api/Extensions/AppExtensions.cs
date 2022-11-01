@@ -43,6 +43,11 @@ namespace Locatudo.Api.Extensions
         {
             services.AddScoped<ApproveRentalValidator>();
             services.AddScoped<CancelRentalValidator>();
+            services.AddScoped<ChangeEquipmentManagerValidator>();
+            services.AddScoped<CreateEquipmentValidator>();
+            services.AddScoped<CreateRentalValidator>();
+            services.AddScoped<DeleteOutsourcedValidator>();
+            services.AddScoped<DisapproveRentalValidator>();
         }
     }
 }

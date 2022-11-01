@@ -1,10 +1,8 @@
-﻿using Flunt.Notifications;
-using Locatudo.Domain.Commands.Contracts;
-using Locatudo.Shared.Commands.Requests;
+﻿using Locatudo.Shared.Commands.Requests;
 
 namespace Locatudo.Domain.Commands.Requests
 {
-    public class CreateEquipmentRequest : Notifiable<Notification>, ICommandRequest
+    public class CreateEquipmentRequest : ICommandRequest
     {
         public string Name { get; set; }
 
@@ -15,13 +13,6 @@ namespace Locatudo.Domain.Commands.Requests
         public CreateEquipmentRequest(string name)
         {
             Name = name;
-        }
-
-        public bool Validate()
-        {
-            AddNotifications(new CreateEquipmentContract(this));
-
-            return IsValid;
         }
     }
 }

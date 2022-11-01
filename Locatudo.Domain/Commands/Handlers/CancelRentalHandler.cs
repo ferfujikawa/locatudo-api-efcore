@@ -28,16 +28,15 @@ namespace Locatudo.Domain.Commands.Handlers
 
             var rental = _rentalRepository.GetById(request.RentalId);
             if (rental == null)
-                return new GenericCommandHandlerResponse<CancelRentalData>("RentalId", "Locação não encontrada.");
+                return new GenericCommandHandlerResponse<CancelRentalData>("Locação não encontrada.");
 
             if (!rental.Cancel())
-                return new GenericCommandHandlerResponse<CancelRentalData>("Status", "A situação atual da locação não permite cancelamento.");
+                return new GenericCommandHandlerResponse<CancelRentalData>("A situação atual da locação não permite cancelamento.");
 
             _rentalRepository.Update(rental);
 
             return new GenericCommandHandlerResponse<CancelRentalData>(
                 new CancelRentalData(rental.Id, rental.Status.Value.ToString()),
-                "Sucesso",
                 "Locação cancelada.");
         }
     }

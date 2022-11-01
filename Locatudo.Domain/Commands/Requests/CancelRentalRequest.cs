@@ -14,10 +14,5 @@ namespace Locatudo.Domain.Commands.Requests
         {
             RentalId = rentalId;
         }
-
-        public bool Validate()
-        {
-            return true;
-        }
     }
 }

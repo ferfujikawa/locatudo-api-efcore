@@ -1,5 +1,4 @@
 ﻿using FluentValidation.Results;
-using Flunt.Notifications;
 
 namespace Locatudo.Shared.Commands.Responses
 {
@@ -7,34 +6,27 @@ namespace Locatudo.Shared.Commands.Responses
     {
         public bool Success { get; private set; }
         public T? Data { get; private set; }
-        public IReadOnlyCollection<string> Messages => _messages?.Select(x => x.Message).ToList() ?? new List<string>();
+        public IReadOnlyCollection<string> Messages => _messages;
 
-        private readonly IEnumerable<Notification>? _messages;
-
-        public GenericCommandHandlerResponse(bool success, T? data, IEnumerable<Notification>? messages)
-        {
-            Success = success;
-            Data = data;
-            _messages = messages;
-        }
+        private readonly IReadOnlyCollection<string> _messages = new List<string>();
 
         public GenericCommandHandlerResponse(IEnumerable<ValidationFailure> validationFailures)
         {
             Success = false;
-            _messages = validationFailures.Select(x => new Notification(x.PropertyName, x.ErrorMessage));
+            _messages = validationFailures.Select(x => x.ErrorMessage).ToList() ;
         }
 
-        public GenericCommandHandlerResponse(string? errorKey, string? errorMessage)
+        public GenericCommandHandlerResponse(string? errorMessage)
         {
             Success = false;
-            _messages = new List<Notification>() { new Notification(errorKey, errorMessage) };
+            _messages = new List<string>() { errorMessage };
         }
 
-        public GenericCommandHandlerResponse(T? data, string? messageKey, string? message)
+        public GenericCommandHandlerResponse(T? data, string? message)
         {
             Success = true;
             Data = data;
-            _messages = new List<Notification>() { new Notification(messageKey, message) };
+            _messages = new List<string>() { message };
         }
     }
 }
