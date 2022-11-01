@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using Locatudo.Domain.Commands.Handlers;
-using Locatudo.Domain.Commands.Requests;
+﻿using Locatudo.Domain.Commands.Handlers;
 using Locatudo.Domain.Commands.Validators;
 using Locatudo.Domain.Queries.Handlers;
 using Locatudo.Domain.Repositories;
@@ -43,7 +41,7 @@ namespace Locatudo.Api.Extensions
 
         public static void InjectValidators(this IServiceCollection services)
         {
-            services.AddScoped<IValidator<ApproveRentalRequest>, ApproveRentalValidator>();
+            services.AddScoped<ApproveRentalValidator>();
         }
     }
 }

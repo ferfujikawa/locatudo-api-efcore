@@ -10,8 +10,6 @@ using Locatudo.Domain.Tests.Customizations;
 using Locatudo.Domain.Commands.Responses;
 using Locatudo.Domain.Commands.Handlers;
 using Locatudo.Domain.Commands.Requests;
-using FluentValidation;
-using FluentValidation.Results;
 
 namespace Locatudo.Domain.Tests.CommandHandlers
 {
@@ -60,19 +58,12 @@ namespace Locatudo.Domain.Tests.CommandHandlers
         }
 
         [Theory, AutoMoq]
-        public void Request_Invalid_GenerateNotification(
-            IFixture fixture,
-            [Frozen] Mock<IValidator<ApproveRentalRequest>> validator)
+        public void Request_Invalid_GenerateNotification(IFixture fixture)
         {
             ////Arrange
             //Mock de handler e instância de request
             var handler = fixture.Create<ApproveRentalHandler>();
-            var validatonResult = fixture.Create<ValidationResult>();
             var request = new ApproveRentalRequest();
-            
-
-            //Setup de retornos de validators
-            validator.Setup(x => x.Validate(It.IsAny<ApproveRentalRequest>())).Returns(validatonResult);
 
             //Act
             var result = handler.Handle(request);

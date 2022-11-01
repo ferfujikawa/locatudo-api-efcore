@@ -1,6 +1,6 @@
-﻿using FluentValidation;
-using Locatudo.Domain.Commands.Requests;
+﻿using Locatudo.Domain.Commands.Requests;
 using Locatudo.Domain.Commands.Responses;
+using Locatudo.Domain.Commands.Validators;
 using Locatudo.Domain.Repositories;
 using Locatudo.Shared.Commands.Handlers;
 using Locatudo.Shared.Commands.Responses;
@@ -11,12 +11,12 @@ namespace Locatudo.Domain.Commands.Handlers
     {
         private readonly IRentalRepository _rentalRepository;
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly IValidator<ApproveRentalRequest> _validator;
+        private readonly ApproveRentalValidator _validator;
 
         public ApproveRentalHandler(
             IRentalRepository rentalRepository,
             IEmployeeRepository employeeRepository,
-            IValidator<ApproveRentalRequest> validator)
+            ApproveRentalValidator validator)
         {
             _rentalRepository = rentalRepository;
             _employeeRepository = employeeRepository;
