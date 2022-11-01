@@ -12,6 +12,7 @@ builder.Services.InjectConnection(connectionString);
 builder.Services.InjectRepositories();
 builder.Services.InjectHandlers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.InjectValidators();
 
 var app = builder.Build();
 

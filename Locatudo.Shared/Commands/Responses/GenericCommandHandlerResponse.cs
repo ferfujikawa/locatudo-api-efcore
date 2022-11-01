@@ -1,4 +1,5 @@
-﻿using Flunt.Notifications;
+﻿using FluentValidation.Results;
+using Flunt.Notifications;
 
 namespace Locatudo.Shared.Commands.Responses
 {
@@ -15,6 +16,13 @@ namespace Locatudo.Shared.Commands.Responses
             Success = success;
             Data = data;
             _messages = messages;
+        }
+
+        public GenericCommandHandlerResponse(bool success, T? data, IEnumerable<ValidationFailure> validationFailures)
+        {
+            Success = success;
+            Data = data;
+            _messages = validationFailures.Select(x => new Notification(x.PropertyName, x.ErrorMessage));
         }
 
         public GenericCommandHandlerResponse(bool success, T? data, string? messageKey, string? message)

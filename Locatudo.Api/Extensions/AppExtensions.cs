@@ -1,4 +1,7 @@
-﻿using Locatudo.Domain.Commands.Handlers;
+﻿using FluentValidation;
+using Locatudo.Domain.Commands.Handlers;
+using Locatudo.Domain.Commands.Requests;
+using Locatudo.Domain.Commands.Validators;
 using Locatudo.Domain.Queries.Handlers;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
@@ -36,6 +39,11 @@ namespace Locatudo.Api.Extensions
             services.AddTransient<ChangeEquipmentManagerHandler>();
             services.AddTransient<DeleteOutsourcedHandler>();
             services.AddTransient<GetRentalByIdHandler>();
+        }
+
+        public static void InjectValidators(this IServiceCollection services)
+        {
+            services.AddScoped<IValidator<ApproveRentalRequest>, ApproveRentalValidator>();
         }
     }
 }

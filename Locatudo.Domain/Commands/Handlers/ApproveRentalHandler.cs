@@ -1,4 +1,5 @@
-﻿using Locatudo.Domain.Commands.Requests;
+﻿using FluentValidation;
+using Locatudo.Domain.Commands.Requests;
 using Locatudo.Domain.Commands.Responses;
 using Locatudo.Domain.Repositories;
 using Locatudo.Shared.Commands.Handlers;
@@ -10,17 +11,23 @@ namespace Locatudo.Domain.Commands.Handlers
     {
         private readonly IRentalRepository _rentalRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IValidator<ApproveRentalRequest> _validator;
 
-        public ApproveRentalHandler(IRentalRepository rentalRepository, IEmployeeRepository employeeRepository)
+        public ApproveRentalHandler(
+            IRentalRepository rentalRepository,
+            IEmployeeRepository employeeRepository,
+            IValidator<ApproveRentalRequest> validator)
         {
             _rentalRepository = rentalRepository;
             _employeeRepository = employeeRepository;
+            _validator = validator;
         }
 
         public ICommandResponse<ApproveRentalData> Handle(ApproveRentalRequest request)
         {
-            if (!request.Validate())
-                return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, request.Notifications);
+            var validationResult = _validator.Validate(request);
+            if (!validationResult.IsValid)
+                return new GenericCommandHandlerResponse<ApproveRentalData>(false, null, validationResult.Errors);
 
             var appraiser = _employeeRepository.GetById(request.AppraiserId);
             if (appraiser == null)
