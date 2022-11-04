@@ -1,4 +1,4 @@
-﻿using Flunt.Notifications;
+﻿using FluentValidation.Results;
 
 namespace Locatudo.Shared.Queries.Responses
 {
@@ -6,22 +6,27 @@ namespace Locatudo.Shared.Queries.Responses
     {
         public bool Success { get; private set; }
         public T? Data { get; private set; }
-        public IReadOnlyCollection<string> Messages => _messages?.Select(x => x.Message).ToList() ?? new List<string>();
+        public IReadOnlyCollection<string> Messages => _messages;
 
-        private readonly IEnumerable<Notification>? _messages;
+        private readonly IReadOnlyCollection<string> _messages;
 
-        public GenericQueryHandlerResponse(bool success, T? data, IEnumerable<Notification>? messages)
+        public GenericQueryHandlerResponse(IReadOnlyCollection<ValidationFailure> messages)
         {
-            Success = success;
-            Data = data;
-            _messages = messages;
+            Success = false;
+            _messages = messages.Select(x => x.ErrorMessage).ToList();
         }
 
-        public GenericQueryHandlerResponse(bool success, T? data, string? messageKey, string? message)
+        public GenericQueryHandlerResponse(string message)
         {
-            Success = success;
+            Success = false;
+            _messages = new List<string>() { message };
+        }
+
+        public GenericQueryHandlerResponse(T data, string message)
+        {
+            Success = true;
             Data = data;
-            _messages = new List<Notification>() { new Notification(messageKey, message) };
+            _messages = new List<string>() { message };
         }
     }
 }

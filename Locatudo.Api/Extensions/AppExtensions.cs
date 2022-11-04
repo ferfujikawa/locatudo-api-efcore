@@ -1,6 +1,7 @@
 ﻿using Locatudo.Domain.Commands.Handlers;
 using Locatudo.Domain.Commands.Validators;
 using Locatudo.Domain.Queries.Handlers;
+using Locatudo.Domain.Queries.Validators;
 using Locatudo.Domain.Repositories;
 using Locatudo.Infra.Data;
 using Locatudo.Infra.Repositories;
@@ -48,6 +49,7 @@ namespace Locatudo.Api.Extensions
             services.AddScoped<CreateRentalValidator>();
             services.AddScoped<DeleteOutsourcedValidator>();
             services.AddScoped<DisapproveRentalValidator>();
+            services.AddScoped<GetRentalByIdValidator>();
         }
     }
 }

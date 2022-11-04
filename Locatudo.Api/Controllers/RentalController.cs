@@ -25,7 +25,7 @@ namespace Locatudo.Api.Controllers
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RentalResponse))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(IEnumerable<string>))]
         public IActionResult GetById(
             [FromServices] GetRentalByIdHandler handler,
             [FromRoute] Guid id)
@@ -33,7 +33,7 @@ namespace Locatudo.Api.Controllers
             var request = new GetRentalByIdRequest(id);
             var response = handler.Handle(request);
             if (!response.Success)
-                return new NotFoundResult();
+                return new NotFoundObjectResult(response.Messages);
             return new OkObjectResult(response.Data);
         }
 

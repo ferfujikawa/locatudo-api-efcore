@@ -2,5 +2,4 @@
 
 public interface IQueryRequest
 {
-    bool Validate();
 }
