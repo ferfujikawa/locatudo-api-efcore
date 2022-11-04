@@ -3,7 +3,7 @@ using Locatudo.Domain.Commands.Requests;
 
 namespace Locatudo.Domain.Commands.Validators
 {
-    public class DeleteOutsourcedValidator : AbstractValidator<DeleteOutsourcedRequest>, ICommandValidator<DeleteOutsourcedRequest>
+    public class DeleteOutsourcedValidator : AbstractValidator<DeleteOutsourcedRequest>
     {
         public DeleteOutsourcedValidator()
         {

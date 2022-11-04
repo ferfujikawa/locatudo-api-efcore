@@ -3,7 +3,7 @@ using Locatudo.Domain.Commands.Requests;
 
 namespace Locatudo.Domain.Commands.Validators
 {
-    public class CreateEquipmentValidator : AbstractValidator<CreateEquipmentRequest>, ICommandValidator<CreateEquipmentRequest>
+    public class CreateEquipmentValidator : AbstractValidator<CreateEquipmentRequest>
     {
         public CreateEquipmentValidator()
         {

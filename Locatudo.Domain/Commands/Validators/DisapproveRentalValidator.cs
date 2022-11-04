@@ -3,7 +3,7 @@ using Locatudo.Domain.Commands.Requests;
 
 namespace Locatudo.Domain.Commands.Validators
 {
-    public class DisapproveRentalValidator : AbstractValidator<DisapproveRentalRequest>, ICommandValidator<DisapproveRentalRequest>
+    public class DisapproveRentalValidator : AbstractValidator<DisapproveRentalRequest>
     {
         public DisapproveRentalValidator()
         {
